@@ -11,10 +11,12 @@ import random
 import matplotlib.pyplot as plt
 
 
-
 class Mnist_Loader:
     def load_data(self):
-        """Load the MNIST dataset from a gzipped pickle file."""
+        """ Load the MNIST dataset from a gzipped pickle file located at, './data/mnist.pkl.gz'
+            Open the binary file to read, specified by 'rb'. Extract the training data, validation and test data
+            using the load function and the 'latin1' encoding.
+        """
         print("Loading MNIST data...")
         with gzip.open('./data/mnist.pkl.gz', 'rb') as f:
             training_data, validation_data, test_data = pickle.load(f, encoding='latin1')
@@ -78,10 +80,10 @@ class Mnist_Loader:
 
         # Apply the translation (shifting) to the image
         translation_matrix = np.float32([[1, 0, shift_x], [0, 1, shift_y]])
-        centralized_image = cv2.warpAffine(image, translation_matrix, (image.shape[1], image.shape[0]), borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+        centralized_image = cv2.warpAffine(image, translation_matrix, (image.shape[1], image.shape[0]),
+                                           borderMode=cv2.BORDER_CONSTANT, borderValue=0)
 
         return centralized_image
-
 
     def calculate_optimal_rotation(self, image, steps=36):
         """Find the rotation angle that makes the bounding box as narrow as possible and as tall as possible, within ±40 degrees."""
@@ -101,7 +103,7 @@ class Mnist_Loader:
             y, x = np.nonzero(rotated_image)  # Get the coordinates of non-zero pixels
             if len(x) == 0 or len(y) == 0:
                 continue
-            
+
             min_x, max_x = np.min(x), np.max(x)
             min_y, max_y = np.min(y), np.max(y)
             width, height = max_x - min_x, max_y - min_y
@@ -119,7 +121,8 @@ class Mnist_Loader:
         h, w = image.shape
         center = (w / 2, h / 2)
         rotation_matrix = cv2.getRotationMatrix2D(center, angle, scale=1.0)
-        rotated_image = cv2.warpAffine(image, rotation_matrix, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+        rotated_image = cv2.warpAffine(image, rotation_matrix, (w, h), flags=cv2.INTER_CUBIC,
+                                       borderMode=cv2.BORDER_CONSTANT, borderValue=0)
         return rotated_image
 
     def show_images(self, before, after):
@@ -135,18 +138,18 @@ class Mnist_Loader:
 
         plt.show()
 
-
     def standardize_images(self, images, labels):
         """Standardize a list of images by first centralizing and then rotating them."""
         standardized_images = []
         for image, _ in zip(images, labels):
             centralized_image = self.centralize_image(image)  # First centralize the image
             angle = self.calculate_optimal_rotation(centralized_image)  # Then calculate optimal rotation angle
-            rotated_image = self.rotate_image(centralized_image, angle)  # Rotate by the calculated angle to adjust the orientation
-            
+            rotated_image = self.rotate_image(centralized_image,
+                                              angle)  # Rotate by the calculated angle to adjust the orientation
+
             # Optionally display images before and after rotation
             # self.show_images(image, rotated_image)
-            
+
             standardized_images.append(rotated_image)
         return standardized_images
 
@@ -162,7 +165,6 @@ class LLBIC:
 
         train_images, train_labels = zip(*train_data)
         test_images, test_labels = zip(*test_data)
-
 
         train_images_standardized = loader.standardize_images(np.array(train_images), np.array(train_labels))
         test_images_standardized = loader.standardize_images(np.array(test_images), np.array(test_labels))
@@ -187,7 +189,6 @@ class LLBIC:
             print(f"Error converting data to tensors: {e}")
             raise
 
-
         self.device = device
         self.train_inputs = self.train_inputs.to(self.device)
         self.train_classes = self.train_classes.to(self.device)
@@ -199,7 +200,6 @@ class LLBIC:
         self.no_of_laws = no_of_laws
         self.H = H
         self.features_matrix = torch.zeros((self.H, 49, self.no_of_classes), device=self.device)
-
 
     def _square_embed(self, instance_index, block_index):
         """ Extract a 4x4 block from the image and compute its symmetric matrix. """
@@ -243,36 +243,78 @@ class LLBIC:
         symmetric_matrix = torch.matmul(four_by_four_box, four_by_four_box.T)
         return symmetric_matrix
 
-    
+    def count_non_zero_pixels_per_pixel(self):
+        """Track non-zero pixel positions, reduce them to a 10x196 matrix, and compute the reciprocal of the pixel counts for each class."""
+
+        # Initialize a 10x196 tensor to store non-zero pixel counts for each class (reduced 2x2 blocks)
+        non_zero_pixel_positions = torch.ones((self.no_of_classes, 49), dtype=torch.float32, device=self.device)
+        class_counts = torch.zeros(self.no_of_classes, dtype=torch.int64, device=self.device)
+
+        # Calculate the non-zero pixel positions and class counts
+        for i in range(self.no_of_instance):
+            label = self.train_classes[i]
+            class_counts[label] += 1  # Count instances per class
+
+            # Reduce the image size by summing non-zero pixels in 2x2 blocks
+            for block_index in range(49):
+                # Get 4x4 block
+                block_row = block_index // 7
+                block_col = block_index % 7
+
+                start_row = block_row * 4
+                start_col = block_col * 4
+
+                block_sum = 0  # Sum of non-zero pixels in this 2x2 block
+                for r in range(4):
+                    for c in range(4):
+                        row = start_row + r
+                        col = start_col + c
+                        if row < 28 and col < 28:  # Bounds check
+                            calculated_index = row * 28 + col
+                            block_sum += (self.train_inputs[i, calculated_index] > 0).float()
+
+                # Add the block sum to the corresponding class and block index
+                non_zero_pixel_positions[label, block_index] += block_sum
+
+        # Avoid division by zero by considering only valid classes
+        valid_classes = class_counts > 0
+        for c in range(self.no_of_classes):
+            if valid_classes[c]:
+                # Take reciprocal of non-zero pixel counts where counts are non-zero
+                non_zero_pixel_positions[c][non_zero_pixel_positions[c] > 0] = \
+                    1.0 / non_zero_pixel_positions[c][non_zero_pixel_positions[c] > 0]
+
+        torch.set_printoptions(threshold=float('inf'), precision=10, linewidth=200)
+        print(non_zero_pixel_positions)
+
+        return non_zero_pixel_positions.T
 
     def count_non_zero_pixels_per_class(self):
         """Count the number of non-zero pixels and the number of instances for each class.
         Normalize the non-zero pixel counts by the number of instances and then by the maximum value."""
-        
+
         non_zero_counts = torch.zeros(self.no_of_classes, dtype=torch.float32, device=self.device)
         class_counts = torch.zeros(self.no_of_classes, dtype=torch.int64, device=self.device)
-        
+
         # Calculate non-zero pixel counts and class counts
-        for i in range(self.no_of_instance): 
+        for i in range(self.no_of_instance):
             label = self.train_classes[i]
             non_zero_pixels = torch.sum(self.train_inputs[i] > 0).item()
             non_zero_counts[label] += non_zero_pixels
             class_counts[label] += 1
-        
+
         # Avoid division by zero for classes with no instances
         valid_classes = class_counts > 0
         non_zero_counts[valid_classes] /= class_counts[valid_classes].float()
-        
+
         # Normalize by the maximum non-zero count
         max_pixel = torch.max(non_zero_counts)
         if max_pixel > 0:
             non_zero_counts /= max_pixel
-        
+
         print(non_zero_counts)
-        
+
         return non_zero_counts
-
-
 
     def _get_law(self, in_matrix):
         """ Compute the eigenvector corresponding to the smallest eigenvalue. """
@@ -296,9 +338,9 @@ class LLBIC:
     def _extract_features_matrix(self):
         """Compute and store the features matrix."""
         print("Extracting features matrix...")
-        
+
         # Initialize the tensor to hold all laws (features)
-        all_laws_tensor = torch.zeros((self.H, 49, self.no_of_instance), device=self.device) 
+        all_laws_tensor = torch.zeros((self.H, 49, self.no_of_instance), device=self.device)
 
         # Extract features for each instance
         for i in range(self.no_of_instance):
@@ -313,31 +355,28 @@ class LLBIC:
         # Calculate the average feature matrix for each class
         for cls in range(self.no_of_classes):
             class_indices = (self.train_classes == cls).nonzero(as_tuple=True)[0]
-            
+
             if len(class_indices) == 0:
                 continue
-            
+
             class_laws = all_laws_tensor[:, :, class_indices]
             class_average = torch.mean(class_laws, dim=2)
             self.features_matrix[:, :, cls] = class_average
 
-
         # Normalize for pixel counts
-        normalize_for_pixels = self.count_non_zero_pixels_per_class()
-        normalize_for_pixels[1] += 0.1
-        normalize_for_pixels[2] -= 0.05
-        normalize_for_pixels[3] += 0.04
-        normalize_for_pixels[5] -= 0.05
-        normalize_for_pixels[9] += 0.05
-        normalize_for_pixels[8] += 0.07
+        normalize_for_class = self.count_non_zero_pixels_per_class()
+        normalize_for_class[1] -= 0.02
+        normalize_for_class[2] -= 0.02
+        normalize_for_class[3] += 0.05
+        normalize_for_class[5] -= 0.08
+        normalize_for_class[9] += 0.08
+        normalize_for_class[8] += 0.08
         # Multiply the feature matrix by the normalized non-zero pixel counts for each class
         for cls in range(self.no_of_classes):
-            self.features_matrix[:, :, cls] *= normalize_for_pixels[cls]
+            self.features_matrix[:, :, cls] *= normalize_for_class[cls]
         torch.set_printoptions(threshold=float('inf'), precision=10, linewidth=200)
         # print(self.features_matrix)
         return self.features_matrix
-
-
 
     def train(self, cleanup=False):
         """ Train the model by computing the feature matrix. """
@@ -346,14 +385,14 @@ class LLBIC:
             print("All training instances are unique.")
         else:
             print("Warning: Some training instances are identical.")
-        
+
         self.features_matrix = self._extract_features_matrix()
-        
+
         if self.features_matrix.numel() == 0:
             raise ValueError("Error: features_matrix is empty after _extract_features_matrix computation.")
         else:
             print(f"Features matrix computed successfully with shape: {self.features_matrix.shape}")
-        
+
         if cleanup:
             del self.train_inputs
             del self.train_classes
@@ -367,9 +406,6 @@ class LLBIC:
         unique_rows = len(torch.unique(data_flat, dim=0))
         total_rows = data_tensor.size(0)
         return unique_rows == total_rows
-
-
-
 
     def _multiply(self, stacked_embeddings):
         P = self.features_matrix.to(stacked_embeddings.device)
@@ -391,7 +427,7 @@ class LLBIC:
 
                 # Extract the 2xN block of embeddings
                 block_embeddings = stacked_embeddings[start_row:end_row, :]
-                
+
                 # Ensure block_embeddings is 2x2
                 if block_embeddings.size(0) != 4:
                     print(f"Error: Expected block_embeddings with 4 rows but got {block_embeddings.size(0)} rows.")
@@ -410,7 +446,6 @@ class LLBIC:
 
         return final_result
 
-
     def classify(self, instance, z):
         """ Classify a single instance by finding the class with the closest score. """
         if isinstance(z, np.ndarray):
@@ -419,85 +454,92 @@ class LLBIC:
         z = z.to(self.device)
 
         embeddings = [self._square_embed_test(instance, center_index) for center_index in range(49)]
-        
-        embeddings_tensor = torch.stack(embeddings)  
 
-        stacked_embeddings = embeddings_tensor.view(-1, 4)  
-        
+        embeddings_tensor = torch.stack(embeddings)
+
+        stacked_embeddings = embeddings_tensor.view(-1, 4)
+
         result = self._multiply(stacked_embeddings)
-        
+
         sorted_indices = torch.argsort(result)
-        
+
         digit_vector = torch.arange(0, 10, device=self.device)
-        
+
         sorted_digit_vector = digit_vector[sorted_indices]
-        
+
         lowest_score = result[sorted_indices[0]]
         second_lowest_score = result[sorted_indices[1]]
-        
-        if second_lowest_score / lowest_score >= 1.02:
-            predicted_class = sorted_digit_vector[0].item()  # Class with the lowest score
-        else:
-            predicted_class = 10  # Assign to the "not sure" class
-        
+
+        # if second_lowest_score / lowest_score >= 1.02:
+        predicted_class = sorted_digit_vector[0].item()  # Class with the lowest score
+        # else:
+        #     predicted_class = 10  # Assign to the "not sure" class
+
         return predicted_class, result
-
-
 
     def classify_test(self, z):
         """ Classify test data instances and return the frequency of predicted and actual classes. """
         predicted_counts = defaultdict(int)
         actual_counts = defaultdict(int)
-        
+
         predictions = []
-        
+
         for instance in range(self.test_inputs.size(0)):
             predicted_class, result_mean = self.classify(instance, z)
             actual_class = self.test_classes[instance].item()
-            
+
             predicted_counts[predicted_class] += 1
             actual_counts[actual_class] += 1
-            
+
             predictions.append(predicted_class)
-        
+
         print("Frequency of predicted classes:")
         for cls in range(self.no_of_classes):
             print(f"  Class {cls}: {predicted_counts[cls]}")
         print(f"  Class 'not sure': {predicted_counts[10]}")
-        
+
         print("Frequency of actual classes:")
         for cls in range(self.no_of_classes):
             print(f"  Class {cls}: {actual_counts[cls]}")
-        
+
         return predictions, predicted_counts[10]
 
     def evaluate(self):
         """ Evaluate the model on the test dataset. """
         print("Evaluating on test data...")
-        
+
         predictions, not_sure_count = self.classify_test(self.test_inputs)
-        
-        correct_counts = defaultdict(int)
+
+        correct_counts = defaultdict(int)  # To track the number of correct predictions per class
+        total_counts = defaultdict(int)  # To track the total occurrences of each class in the test set
         total_correct = 0
-        
+
+        # Count correct predictions and total occurrences of each class
         for pred, true in zip(predictions, self.test_classes.cpu().numpy()):
-            if pred == true:
+            total_counts[true] += 1  # Increment the count for the actual class
+
+            if pred == true:  # If prediction is correct, increment correct count
                 correct_counts[true] += 1
                 total_correct += 1
-        
+
         print("Correct predictions per class:")
         for cls in range(self.no_of_classes):
-            print(f"  Class {cls}: {correct_counts[cls]}")
-        
+            correct = correct_counts[cls]
+            total = total_counts[cls]
+            percentage = (correct / total * 100) if total > 0 else 0.0
+            print(f"  Class {cls}: {correct}/{total} correct ({percentage:.2f}%)")
+
         print(f"  Class 'not sure': {not_sure_count}")
-        
+
         accuracy = (total_correct + not_sure_count) / len(self.test_classes) * 100
         print(f"Test accuracy: {accuracy:.2f}%")
+
 
 # Example usage:
 if __name__ == "__main__":
     print("Starting example usage...")
-    llbic = LLBIC(no_of_instance=1000, no_of_classes=10, no_of_laws=49, H=4, device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+    llbic = LLBIC(no_of_instance=1000, no_of_classes=10, no_of_laws=49, H=4,
+                  device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
     llbic.train()
     llbic.evaluate()
     print("Example usage finished.")
