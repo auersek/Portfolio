@@ -14,5 +14,6 @@ The second section is training, this is where the algorithm learns to classify t
 
 The third section of the code is classification. In this section the test set is embedded in the same way that the train instance is, however this time the embeddings are multiplied by the corresponding laws. If the embedded matrices are similar to the one the laws were derived from it should bring the product very close to zero, thereby signalling a similarity. The algorithm checks the product of the embedding with each feature matrix and picks the one that is on average closest to zero.
 
+Further developments: Code for a complex gaussian system approach is in development.
 
 
