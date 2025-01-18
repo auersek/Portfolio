@@ -2,8 +2,7 @@
 
 This portfolio is a collection of my programming projects. This README contains a brief description of each one.
 
-## 
-PROJECT ONE: Local Law-Based Image Classification (LLBIC) (done in Python):
+## PROJECT ONE: Local Law-Based Image Classification (LLBIC) (done in Python):
 
 
 This project aims to classify the MNIST dataset which contains images of digits ranging from 0 to 9, each digit is called a class. The images are represented as 28x28 pixel images with each pixel assigned a value between 0 and 1, 1 being the darkest and 0 being the lightest. The training set contains 50,000 instances, while the testing set 
