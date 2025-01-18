@@ -1,6 +1,6 @@
 # Portfolio
 
-This portfolio is a collection of my programming projects. This README contains a brief description of each one.
+### This portfolio is a collection of my programming projects. This README contains a brief description of each one.
 
 ## PROJECT ONE: Local Law-Based Image Classification (LLBIC) (done in Python):
 
@@ -16,4 +16,6 @@ The third section of the code is classification. In this section the test set is
 
 Further developments: Code for a complex gaussian system approach is in development.
 
+
+## PROJECT TWO: RISC-V CPU (done in System Verilog):
 
