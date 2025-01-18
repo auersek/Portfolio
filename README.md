@@ -19,5 +19,7 @@ Further developments: Code for a complex gaussian system approach is in developm
 
 ## PROJECT TWO: RISC-V CPU (done in System Verilog):
 
+This project aims to build a functioning pipelined RISC-V cpu in system verilog. 
+
 
 
