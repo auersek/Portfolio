@@ -2,6 +2,7 @@
 
 This portfolio is a collection of my programming projects. This README contains a brief description of each one.
 
+## 
 PROJECT ONE: Local Law-Based Image Classification (LLBIC) (done in Python):
 
 
