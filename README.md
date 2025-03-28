@@ -21,7 +21,8 @@ Further developments: Code for a complex gaussian system approach is in developm
 This project aims to build a functioning pipelined RISC-V CPU with cache in system verilog. 
 
 The CPU excecutes RISC-V assembly instructios in a five staged process. 
-<img src="https://github.com/seanryder264/Team24/blob/Aurel/images/WhatsApp%20Image%202024-12-11%20at%2016.29.15.jpeg" width="850" height="550" alt="Pipeline 5 stages passed">
+
+<img src="[https://github.com/seanryder264/Team24/blob/Aurel/images/WhatsApp%20Image%202024-12-11%20at%2016.29.15.jpeg](https://github.com/auersek/Portfolio/blob/main/Images/Screen%20Shot%202025-03-28%20at%206.12.54%20PM.png)" width="850" height="550" alt="Pipeline 5 stages passed">
 
 
 
