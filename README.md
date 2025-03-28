@@ -18,9 +18,18 @@ Further developments: Code for a complex gaussian system approach is in developm
 
 ## PROJECT 2: RISC-V CPU (done in System Verilog):
 
-This project aims to build a functioning pipelined RISC-V cpu in system verilog. 
+This project aims to build a functioning pipelined RISC-V CPU with cache in system verilog. 
 
-## PROJECT 3
+The CPU excecutes RISC-V assembly instructios in a five staged process. 
+<img src="https://github.com/seanryder264/Team24/blob/Aurel/images/WhatsApp%20Image%202024-12-11%20at%2016.29.15.jpeg" width="850" height="550" alt="Pipeline 5 stages passed">
+
+
+
+
+## PROJECT 3: C Compiler (done in C++):
+
+
+
 
 
 
