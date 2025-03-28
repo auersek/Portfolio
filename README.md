@@ -27,6 +27,9 @@ I used pipelining to improve the performance of the CPU by increasing the number
 
 ## PROJECT 3: C Compiler (done in C++):
 
+This project aims to build a C compiler which translates C code into RISC-V assembly instructions. 
+
+
 
 
 
