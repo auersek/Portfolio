@@ -20,7 +20,7 @@ Further developments: Code for a complex gaussian system approach is in developm
 
 This project aims to build a functioning pipelined RISC-V CPU with cache in system verilog. 
 
-The CPU excecutes RISC-V assembly instructios in a five staged process: fetching, decode, execute, memory and writeback.
+I used pipelining to improve the performance of the CPU by increasing the number of instructions executed per unit of time. It allows the CPU to work on multiple instructions simultaneously, rather than completing one instruction before starting the next. In this RISC-V project, five stages are used: fetch, decode, execute, memory, and write-back. Four clocked flip-flops, one between each of these stages, are implemented to delay the signals, as shown below.
 
 <img src="https://github.com/auersek/Portfolio/blob/main/Images/Screen%20Shot%202025-03-28%20at%206.12.54%20PM.jpg" width="850" height="550" alt="Pipeline 5 stages passed">
 
