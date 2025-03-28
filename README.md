@@ -22,9 +22,7 @@ This project aims to build a functioning pipelined RISC-V CPU with cache in syst
 
 The CPU excecutes RISC-V assembly instructios in a five staged process. 
 
-<img src="[https://github.com/seanryder264/Team24/blob/Aurel/images/WhatsApp%20Image%202024-12-11%20at%2016.29.15.jpeg](https://github.com/auersek/Portfolio/blob/main/Images/Screen%20Shot%202025-03-28%20at%206.12.54%20PM.png)" width="850" height="550" alt="Pipeline 5 stages passed">
-
-
+<img src="" width="850" height="550" alt="Pipeline 5 stages passed">
 
 
 ## PROJECT 3: C Compiler (done in C++):
