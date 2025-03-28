@@ -24,6 +24,8 @@ I used pipelining to improve the performance of the CPU by increasing the number
 
 <img src="https://github.com/auersek/Portfolio/blob/main/Images/Screen%20Shot%202025-03-28%20at%206.12.54%20PM.jpg" width="850" height="550" alt="Pipeline 5 stages passed">
 
+To resolve data and control hazards, I designed a hazard unit that manages stalling, flushing, and forwarding mechanisms. Additionally, I implemented JAL and JALR instructions for subroutine calls and returns, integrating jump logic into the control unit. I also implemented a two-way set-associative cache system, focusing on a write-through policy and handling cache misses with an LRU (Least Recently Used) replacement policy.
+
 
 ## PROJECT 3: C Compiler (done in C++):
 
