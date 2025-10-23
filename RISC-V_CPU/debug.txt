@@ -1,0 +1,45 @@
+always_ff @(posedge clk) begin
+    $display(" ");
+    $display("NEW Instruction: %h, Opcode: %b", instr_F, instr_F[6:0]); 
+
+   // Debug Fetch Stage
+    $display("Fetch Stage:");
+    $display("pc_F: %h, instr_F: %h", pc_F, instr_F);
+    // $display("pc_Plus4_F: %h, pc_next_F: %h", pc_Plus4_F, pc_next_F);
+
+    // Debug Decode Stage
+    $display("Decode Stage:");
+    $display("regFileOut1_D: %h, regFileOut2_D: %h, ImmExt_D: %h", regFileOut1_D, regFileOut2_D, ImmExt_D);
+    // $display("Instruction Decode: rd: %0d, rs1: %0d, rs2: %0d", instr_D[11:7], instr_D[19:15], instr_D[24:20]);
+    // $display("pc_next_F: %h Current pc (pc_F) %h", pc_next_F, pc_F);
+    $display("Control Unit: RegWrite: %b, ALUSrc: %b, ResultSrc: %b, MemCtrl: %b, MemWrite: %b, Branch: %b, Jump: %b, ALUCtrl: %b, ImmSrc: %b, MemRead: %b", regWrite_D, ALUsrc_D, resultSrc_D, MemCtrl_D, memWrite_D, branch_D, jump_D, ALUcontrol_D, immSrc_D, MemRead_D);
+    
+    // Debug Execute Stage
+    $display("Execute Stage:");
+    $display("ALUout_E: %h, ALU_in2_E: %h, mux4SrcA_OUT: %h", ALUout_E, ALU_in2_E, mux4SrcA_OUT);
+    // $display("regFileOut1_E: %h, regFileOut2_E: %h", regFileOut1_E, regFileOut2_E);
+    $display("ALU Control: %b, ALU Src: %b", ALUcontrol_E, ALUsrc_E);
+    $display("branch: %b, zero: %b, PCSrc_E: %b, target_pc: %h, pc_Plus4_F: %h", branch_E, zero_E, PCSrc_E, pc_Target_E, pc_Plus4_F);
+
+    // Debug Memory Stage
+    $display("Memory Stage:");
+    // $display("ALUout_M: %h, WriteData_M: %h, ReadMem_out_M: %h", ALUout_M, WriteData_M, ReadMem_out_M);
+    $display("resultSrc_M: %b", resultSrc_M);
+
+    // Debug Writeback Stage
+    $display("Writeback Stage:");
+    // $display("ALUout_W: %h, ReadMem_out_W: %h, pc_Plus4_W: %h", ALUout_W, ReadMem_out_W, pc_Plus4_W);
+    $display("resultSrc_W: %b (0: ALUout_W, 1: ReadMem_out_W, 2: pc_Plus4_W)", resultSrc_W);
+    if (regWrite_W) begin
+        $display("Register Write Enabled: Writing to Register: %0d, Result_W: %h", destinationReg_W, Result_W);
+    end else begin
+        $display("Register Write Disabled: No write this cycle.");
+    end
+
+    // Debug Hazard Unit
+    $display("Hazard Unit:");
+    $display("stall: %b, flush: %b", stall, flush);
+    $display("ForwardA_e: %b, ForwardB_e: %b", forwardA_e, forwardB_e);
+end
+
+

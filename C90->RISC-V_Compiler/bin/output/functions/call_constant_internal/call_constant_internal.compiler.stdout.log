@@ -1,0 +1,11 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/functions/call_constant_internal.c...
+# DEBUG: primary_expression is an INT_CONSTANT: 20
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: g
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_constant_internal/call_constant_internal.s.printed
+Compiling parsed AST...
+g
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_constant_internal/call_constant_internal.s

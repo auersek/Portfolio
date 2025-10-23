@@ -1,0 +1,32 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/array/index_variable.c...
+# DEBUG: primary_expression is an INT_CONSTANT: 8
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: primary_expression is an INT_CONSTANT: 8
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an INT_CONSTANT: 4
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_variable/index_variable.s.printed
+Compiling parsed AST...
+FindMem in Assign i
+ParameterList check
+Array Index: 
+FindMem in Assign x
+ParameterList check
+Array Index: a5
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_variable/index_variable.s

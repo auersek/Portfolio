@@ -1,0 +1,17 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==2566==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x5566ee4de07b bp 0x7fff52dc9c80 sp 0x7fff52dc9c70 T0)
+==2566==The signal is caused by a READ memory access.
+==2566==Hint: address points to the zero page.
+    #0 0x5566ee4de07b in ast::DirectDeclarator::getIdentifier() const /workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_direct_declarator.hpp:30
+    #1 0x5566ee4dd09d in ast::FunctionDefinition::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const src/ast_function_definition.cpp:11
+    #2 0x5566ee4f42be in ast::NodeList::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const src/ast_node.cpp:19
+    #3 0x5566ee51209e in Compile(ast::Node* const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:75
+    #4 0x5566ee511366 in main src/compiler.cpp:40
+    #5 0x7fee10c29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #6 0x7fee10c29e3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #7 0x5566ee3a8694 in _start (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x2e3694)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_direct_declarator.hpp:30 in ast::DirectDeclarator::getIdentifier() const
+==2566==ABORTING

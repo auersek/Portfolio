@@ -1,0 +1,2 @@
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.s: Assembler messages:
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.s:10: Error: unrecognized opcode `vvyyadd a0,a0,a1'

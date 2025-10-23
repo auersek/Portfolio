@@ -1,0 +1,39 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/programs/sqrt.c...
+# DEBUG: primary_expression is an IDENTIFIER: lo
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: primary_expression is an IDENTIFIER: hi
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: lo
+# DEBUG: primary_expression is an IDENTIFIER: hi
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: mid
+# DEBUG: primary_expression is an IDENTIFIER: mid
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: sqr
+# DEBUG: primary_expression is an IDENTIFIER: val
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: lo
+# DEBUG: primary_expression is an IDENTIFIER: mid
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: hi
+# DEBUG: primary_expression is an IDENTIFIER: mid
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: lo
+# DEBUG: primary_expression is an IDENTIFIER: lo
+# DEBUG: primary_expression is an IDENTIFIER: val
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: hi
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: lo
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.s.printed
+Compiling parsed AST...
+0FindMem in Assign lo
+ParameterList check
+Array Index: 

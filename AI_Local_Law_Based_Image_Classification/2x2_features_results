@@ -1,0 +1,40 @@
+Frequency of predicted classes:
+  Class 0: 1956
+  Class 1: 204
+  Class 2: 1254
+  Class 3: 1700
+  Class 4: 228
+  Class 5: 1
+  Class 6: 517
+  Class 7: 454
+  Class 8: 3251
+  Class 9: 435
+  Class 'not sure': 0
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 948/980 correct (96.73%)
+  Class 1: 204/1135 correct (17.97%)
+  Class 2: 764/1032 correct (74.03%)
+  Class 3: 719/1010 correct (71.19%)
+  Class 4: 224/982 correct (22.81%)
+  Class 5: 1/892 correct (0.11%)
+  Class 6: 410/958 correct (42.80%)
+  Class 7: 450/1028 correct (43.77%)
+  Class 8: 789/974 correct (81.01%)
+  Class 9: 306/1009 correct (30.33%)
+  Class 'not sure': 0
+Test accuracy: 48.15%
+Example usage finished.
+
+
+

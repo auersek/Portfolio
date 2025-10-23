@@ -1,0 +1,7 @@
+char My name issearch( 
+) {while (*x) {if () return x;
+
+x = (x + 1);
+}
+return 0;
+}

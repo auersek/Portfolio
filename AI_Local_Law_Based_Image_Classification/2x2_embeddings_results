@@ -1,0 +1,1088 @@
+sudo apt install python3-opencv-python
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package python3-opencv-python
+
+import cv2
+from scipy.ndimage import center_of_mass
+from sklearn.decomposition import PCA
+
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([6000, 784, 1])
+Classes tensor shape: torch.Size([6000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 909
+  Class 1: 59
+  Class 2: 229
+  Class 3: 442
+  Class 4: 61
+  Class 5: 0
+  Class 6: 357
+  Class 7: 159
+  Class 8: 1595
+  Class 9: 543
+  Class 'not sure': 1646
+Frequency of actual classes:
+  Class 0: 568
+  Class 1: 686
+  Class 2: 625
+  Class 3: 595
+  Class 4: 599
+  Class 5: 548
+  Class 6: 562
+  Class 7: 609
+  Class 8: 587
+  Class 9: 621
+Correct predictions per class:
+  Class 0: 542
+  Class 1: 59
+  Class 2: 229
+  Class 3: 383
+  Class 4: 60
+  Class 5: 0
+  Class 6: 326
+  Class 7: 158
+  Class 8: 478
+  Class 9: 364
+  Class 'not sure': 1646
+Test accuracy: 70.75%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([1000, 784, 1])
+Classes tensor shape: torch.Size([1000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([2000, 784, 1])
+Classes tensor shape: torch.Size([2000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 252
+  Class 1: 0
+  Class 2: 61
+  Class 3: 192
+  Class 4: 38
+  Class 5: 0
+  Class 6: 126
+  Class 7: 44
+  Class 8: 557
+  Class 9: 157
+  Class 'not sure': 573
+Frequency of actual classes:
+  Class 0: 175
+  Class 1: 234
+  Class 2: 219
+  Class 3: 207
+  Class 4: 217
+  Class 5: 179
+  Class 6: 178
+  Class 7: 205
+  Class 8: 192
+  Class 9: 194
+Correct predictions per class:
+  Class 0: 164
+  Class 1: 0
+  Class 2: 61
+  Class 3: 150
+  Class 4: 38
+  Class 5: 0
+  Class 6: 101
+  Class 7: 43
+  Class 8: 135
+  Class 9: 105
+  Class 'not sure': 573
+Test accuracy: 68.50%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([40000, 784, 1])
+Classes tensor shape: torch.Size([40000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4476, 0.8714, 0.8469, 0.7364, 0.7863, 0.8119, 0.6831, 0.9009,
+        0.7435])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1128
+  Class 1: 575
+  Class 2: 619
+  Class 3: 1083
+  Class 4: 463
+  Class 5: 104
+  Class 6: 957
+  Class 7: 632
+  Class 8: 3095
+  Class 9: 1344
+  Class 'not sure': 0
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 916
+  Class 1: 477
+  Class 2: 610
+  Class 3: 781
+  Class 4: 433
+  Class 5: 104
+  Class 6: 802
+  Class 7: 609
+  Class 8: 884
+  Class 9: 739
+  Class 'not sure': 0
+Test accuracy: 63.55%
+Example usage finished.
+
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784, 1])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4530, 0.8685, 0.8489, 0.7367, 0.7792, 0.8124, 0.6870, 0.8962,
+        0.7446])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1080
+  Class 1: 401
+  Class 2: 490
+  Class 3: 933
+  Class 4: 385
+  Class 5: 48
+  Class 6: 885
+  Class 7: 568
+  Class 8: 2790
+  Class 9: 1080
+  Class 'not sure': 1340
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 913
+  Class 1: 363
+  Class 2: 488
+  Class 3: 725
+  Class 4: 373
+  Class 5: 48
+  Class 6: 771
+  Class 7: 557
+  Class 8: 849
+  Class 9: 682
+  Class 'not sure': 1340
+Test accuracy: 71.09%
+Example usage finished.
+
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784, 1])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4530, 0.8685, 0.8489, 0.7367, 0.7792, 0.8124, 0.6870, 0.8962,
+        0.7446])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1044
+  Class 1: 961
+  Class 2: 441
+  Class 3: 946
+  Class 4: 403
+  Class 5: 58
+  Class 6: 863
+  Class 7: 629
+  Class 8: 1847
+  Class 9: 1106
+  Class 'not sure': 1702
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 911
+  Class 1: 798
+  Class 2: 438
+  Class 3: 735
+  Class 4: 387
+  Class 5: 58
+  Class 6: 767
+  Class 7: 613
+  Class 8: 788
+  Class 9: 714
+  Class 'not sure': 1702
+Test accuracy: 79.11%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784, 1])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4530, 0.8685, 0.8489, 0.7367, 0.7792, 0.8124, 0.6870, 0.8962,
+        0.7446])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1100
+  Class 1: 1088
+  Class 2: 511
+  Class 3: 1044
+  Class 4: 470
+  Class 5: 106
+  Class 6: 921
+  Class 7: 690
+  Class 8: 2107
+  Class 9: 1235
+  Class 'not sure': 728
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 923
+  Class 1: 826
+  Class 2: 506
+  Class 3: 776
+  Class 4: 440
+  Class 5: 106
+  Class 6: 789
+  Class 7: 666
+  Class 8: 823
+  Class 9: 754
+  Class 'not sure': 728
+Test accuracy: 73.37%
+Example usage finished.
+
+Starting example usage...
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([5000, 784, 1])
+Classes tensor shape: torch.Size([5000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4473, 0.8600, 0.8447, 0.7266, 0.7802, 0.7915, 0.6790, 0.8876,
+        0.7295])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1093
+  Class 1: 1114
+  Class 2: 470
+  Class 3: 1039
+  Class 4: 494
+  Class 5: 140
+  Class 6: 924
+  Class 7: 674
+  Class 8: 2030
+  Class 9: 1328
+  Class 'not sure': 694
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 918
+  Class 1: 846
+  Class 2: 467
+  Class 3: 789
+  Class 4: 452
+  Class 5: 140
+  Class 6: 785
+  Class 7: 646
+  Class 8: 829
+  Class 9: 801
+  Class 'not sure': 694
+Test accuracy: 73.67%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+HELLO
+Converting data to tensors...
+Inputs tensor shape: torch.Size([50000, 784, 1])
+Classes tensor shape: torch.Size([50000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4478, 0.8763, 0.8499, 0.7389, 0.7901, 0.8162, 0.6851, 0.9034,
+        0.7446])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1080
+  Class 1: 1082
+  Class 2: 507
+  Class 3: 1019
+  Class 4: 464
+  Class 5: 93
+  Class 6: 908
+  Class 7: 677
+  Class 8: 2152
+  Class 9: 1274
+  Class 'not sure': 744
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 914
+  Class 1: 816
+  Class 2: 503
+  Class 3: 762
+  Class 4: 438
+  Class 5: 93
+  Class 6: 792
+  Class 7: 655
+  Class 8: 825
+  Class 9: 770
+  Class 'not sure': 744
+Test accuracy: 73.12%
+Example usage finished.
+
+
+WITH 0.3 FILTER
+Starting example usage...
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784, 1])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4497, 0.8560, 0.8269, 0.7122, 0.7454, 0.7951, 0.6711, 0.8704,
+        0.7228])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 937
+  Class 1: 2777
+  Class 2: 360
+  Class 3: 1018
+  Class 4: 592
+  Class 5: 223
+  Class 6: 879
+  Class 7: 864
+  Class 8: 953
+  Class 9: 1397
+  Class 'not sure': 0
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 877
+  Class 1: 1113
+  Class 2: 356
+  Class 3: 745
+  Class 4: 546
+  Class 5: 214
+  Class 6: 784
+  Class 7: 808
+  Class 8: 620
+  Class 9: 862
+  Class 'not sure': 0
+Test accuracy: 69.25%
+Example usage finished.
+
+
+WITH 0.2 FILTER
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784, 1])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4522, 0.8591, 0.8313, 0.7175, 0.7536, 0.7990, 0.6758, 0.8746,
+        0.7280])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1005
+  Class 1: 2041
+  Class 2: 468
+  Class 3: 1113
+  Class 4: 569
+  Class 5: 237
+  Class 6: 928
+  Class 7: 836
+  Class 8: 1373
+  Class 9: 1430
+  Class 'not sure': 0
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 909
+  Class 1: 1069
+  Class 2: 462
+  Class 3: 795
+  Class 4: 530
+  Class 5: 231
+  Class 6: 822
+  Class 7: 787
+  Class 8: 753
+  Class 9: 860
+  Class 'not sure': 0
+Test accuracy: 72.18%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784, 1])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784, 1])
+Classes tensor shape: torch.Size([10000])
+0.2 filter applied
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4522, 0.8591, 0.8313, 0.7175, 0.7536, 0.7990, 0.6758, 0.8746,
+        0.7280])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 970
+  Class 1: 1842
+  Class 2: 416
+  Class 3: 1026
+  Class 4: 500
+  Class 5: 178
+  Class 6: 877
+  Class 7: 794
+  Class 8: 1213
+  Class 9: 1292
+  Class 'not sure': 892
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 894
+  Class 1: 1049
+  Class 2: 412
+  Class 3: 766
+  Class 4: 478
+  Class 5: 174
+  Class 6: 793
+  Class 7: 759
+  Class 8: 712
+  Class 9: 831
+  Class 'not sure': 892
+Test accuracy: 77.60%
+Example usage finished.
+
+
+IMAGES ROTATED AND 0.2 FITLER
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784])
+Classes tensor shape: torch.Size([10000])
+0.2 filter applied
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1634
+  Class 1: 101
+  Class 2: 651
+  Class 3: 970
+  Class 4: 359
+  Class 5: 1
+  Class 6: 793
+  Class 7: 489
+  Class 8: 3364
+  Class 9: 897
+  Class 'not sure': 741
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 953
+  Class 1: 101
+  Class 2: 631
+  Class 3: 749
+  Class 4: 351
+  Class 5: 1
+  Class 6: 698
+  Class 7: 486
+  Class 8: 874
+  Class 9: 591
+  Class 'not sure': 741
+Test accuracy: 61.76%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+0.2 filter applied
+0.2 filter applied
+0.2 filter applied
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4522, 0.8591, 0.8313, 0.7175, 0.7536, 0.7990, 0.6758, 0.8746,
+        0.7280])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 1005
+  Class 1: 953
+  Class 2: 929
+  Class 3: 1251
+  Class 4: 829
+  Class 5: 796
+  Class 6: 1041
+  Class 7: 982
+  Class 8: 1212
+  Class 9: 1002
+  Class 'not sure': 0
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 915
+  Class 1: 883
+  Class 2: 809
+  Class 3: 866
+  Class 4: 693
+  Class 5: 580
+  Class 6: 849
+  Class 7: 874
+  Class 8: 678
+  Class 9: 753
+  Class 'not sure': 0
+Test accuracy: 79.00%
+Example usage finished.
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+0.2 filter applied
+0.2 filter applied
+0.2 filter applied
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4522, 0.8591, 0.8313, 0.7175, 0.7536, 0.7990, 0.6758, 0.8746,
+        0.7280])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 989
+  Class 1: 905
+  Class 2: 874
+  Class 3: 966
+  Class 4: 691
+  Class 5: 668
+  Class 6: 970
+  Class 7: 914
+  Class 8: 1138
+  Class 9: 1044
+  Class 'not sure': 841
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 906
+  Class 1: 855
+  Class 2: 794
+  Class 3: 757
+  Class 4: 622
+  Class 5: 525
+  Class 6: 822
+  Class 7: 841
+  Class 8: 673
+  Class 9: 767
+  Class 'not sure': 841
+Test accuracy: 84.03%
+Example usage finished.
+
+
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+0.2 filter applied
+0.2 filter applied
+0.2 filter applied
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([50000, 784])
+Classes tensor shape: torch.Size([50000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4453, 0.8659, 0.8312, 0.7194, 0.7651, 0.8010, 0.6734, 0.8837,
+        0.7260])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 973
+  Class 1: 895
+  Class 2: 878
+  Class 3: 954
+  Class 4: 700
+  Class 5: 642
+  Class 6: 956
+  Class 7: 906
+  Class 8: 1179
+  Class 9: 1046
+  Class 'not sure': 871
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 897
+  Class 1: 836
+  Class 2: 800
+  Class 3: 757
+  Class 4: 628
+  Class 5: 513
+  Class 6: 826
+  Class 7: 834
+  Class 8: 676
+  Class 9: 767
+  Class 'not sure': 871
+Test accuracy: 84.05%
+Example usage finished.
+
+
+
+
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+0.2 filter applied
+0.2 filter applied
+0.2 filter applied
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([20000, 784])
+Classes tensor shape: torch.Size([20000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([10000, 784])
+Classes tensor shape: torch.Size([10000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+tensor([1.0000, 0.4522, 0.8591, 0.8313, 0.7175, 0.7536, 0.7990, 0.6758, 0.8746,
+        0.7280])
+Features matrix computed successfully with shape: torch.Size([2, 196, 10])
+Evaluating on test data...
+Frequency of predicted classes:
+  Class 0: 954
+  Class 1: 843
+  Class 2: 786
+  Class 3: 851
+  Class 4: 591
+  Class 5: 501
+  Class 6: 892
+  Class 7: 852
+  Class 8: 943
+  Class 9: 893
+  Class 'not sure': 1894
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 889
+  Class 1: 817
+  Class 2: 739
+  Class 3: 715
+  Class 4: 559
+  Class 5: 437
+  Class 6: 790
+  Class 7: 807
+  Class 8: 614
+  Class 9: 697
+  Class 'not sure': 1894
+Test accuracy: 89.58%
+Example usage finished.
+
+
+Initializing LLBIC...
+Wrapping MNIST data...
+Loading MNIST data...
+MNIST data loaded.
+Images upscaled and 0.2 filter applied
+Images upscaled and 0.2 filter applied
+Images upscaled and 0.2 filter applied
+MNIST data wrapped.
+Converting data to tensors...
+Inputs tensor shape: torch.Size([2000, 3136])
+Classes tensor shape: torch.Size([2000])
+Converting data to tensors...
+Inputs tensor shape: torch.Size([1000, 3136])
+Classes tensor shape: torch.Size([1000])
+Starting the training process...
+All training instances are unique.
+Extracting features matrix...
+aurel a kedvencem legjobb programozo a foldon, de nagyon jol titkolja. :)^[[D;)tensor([1.0000, 0.4692, 0.8575, 0.8617, 0.7298, 0.7857, 0.7795, 0.6883, 0.8714,
+        0.7276], device='cuda:0')
+Features matrix computed successfully with shape: torch.Size([2, 784, 10])
+Evaluating on test data...
+
+Frequency of predicted classes:
+  Class 0: 87
+  Class 1: 79
+  Class 2: 63
+  Class 3: 96
+  Class 4: 54
+  Class 5: 37
+  Class 6: 75
+  Class 7: 80
+  Class 8: 109
+  Class 9: 90
+  Class 'not sure': 230
+Frequency of actual classes:
+  Class 0: 85
+  Class 1: 126
+  Class 2: 116
+  Class 3: 107
+  Class 4: 110
+  Class 5: 87
+  Class 6: 87
+  Class 7: 99
+  Class 8: 89
+  Class 9: 94
+Correct predictions per class:
+  Class 0: 78
+  Class 1: 78
+  Class 2: 62
+  Class 3: 74
+  Class 4: 52
+  Class 5: 31
+  Class 6: 64
+  Class 7: 69
+  Class 8: 54
+  Class 9: 61
+  Class 'not sure': 230
+Test accuracy: 85.30%
+Example usage finished.
+
+
+Frequency of predicted classes:
+  Class 0: 982
+  Class 1: 794
+  Class 2: 781
+  Class 3: 933
+  Class 4: 553
+  Class 5: 498
+  Class 6: 863
+  Class 7: 871
+  Class 8: 995
+  Class 9: 796
+  Class 'not sure': 1934
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 891
+  Class 1: 787
+  Class 2: 749
+  Class 3: 749
+  Class 4: 521
+  Class 5: 442
+  Class 6: 767
+  Class 7: 818
+  Class 8: 613
+  Class 9: 620
+  Class 'not sure': 1934
+Test accuracy: 88.91%
+Example usage finished.
+
+
+
+
+
+Frequency of predicted classes:
+  Class 0: 963
+  Class 1: 895
+  Class 2: 1183
+  Class 3: 1140
+  Class 4: 879
+  Class 5: 850
+  Class 6: 948
+  Class 7: 986
+  Class 8: 1310
+  Class 9: 846
+  Class 'not sure': 0
+Frequency of actual classes:
+  Class 0: 980
+  Class 1: 1135
+  Class 2: 1032
+  Class 3: 1010
+  Class 4: 982
+  Class 5: 892
+  Class 6: 958
+  Class 7: 1028
+  Class 8: 974
+  Class 9: 1009
+Correct predictions per class:
+  Class 0: 885/980 correct (90.31%)
+  Class 1: 890/1135 correct (78.41%)
+  Class 2: 893/1032 correct (86.53%)
+  Class 3: 823/1010 correct (81.49%)
+  Class 4: 681/982 correct (69.35%)
+  Class 5: 589/892 correct (66.03%)
+  Class 6: 848/958 correct (88.52%)
+  Class 7: 860/1028 correct (83.66%)
+  Class 8: 713/974 correct (73.20%)
+  Class 9: 697/1009 correct (69.08%)
+  Class 'not sure': 0
+Test accuracy: 78.79%
+Example usage finished.
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,45 @@
+
+=================================================================
+==2386==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0x563fb6caed47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x563fb6d972d0 in yyparse() src/parser.y:350
+    #2 0x563fb6d9c822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #3 0x563fb6d866c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #4 0x563fb6d861b1 in main src/compiler.cpp:26
+    #5 0x7f82bea29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Indirect leak of 96 byte(s) in 2 object(s) allocated from:
+    #0 0x563fb6caed47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x563fb6d9773a in yyparse() src/parser.y:356
+    #2 0x563fb6d9c822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #3 0x563fb6d866c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #4 0x563fb6d861b1 in main src/compiler.cpp:26
+    #5 0x7f82bea29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Indirect leak of 32 byte(s) in 2 object(s) allocated from:
+    #0 0x563fb6caed47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x563fb6d9231b in yyparse() src/parser.y:96
+    #2 0x563fb6d9c822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #3 0x563fb6d866c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #4 0x563fb6d861b1 in main src/compiler.cpp:26
+    #5 0x7f82bea29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Indirect leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x563fb6caed47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x563fb6d6c0d9 in __gnu_cxx::new_allocator<ast::Node*>::allocate(unsigned long, void const*) /usr/include/c++/11/ext/new_allocator.h:127
+    #2 0x563fb6d6bc2b in std::allocator<ast::Node*>::allocate(unsigned long) /usr/include/c++/11/bits/allocator.h:185
+    #3 0x563fb6d6bc2b in std::allocator_traits<std::allocator<ast::Node*> >::allocate(std::allocator<ast::Node*>&, unsigned long) /usr/include/c++/11/bits/alloc_traits.h:464
+    #4 0x563fb6d6b74d in std::_Vector_base<ast::Node*, std::allocator<ast::Node*> >::_M_allocate(unsigned long) /usr/include/c++/11/bits/stl_vector.h:346
+    #5 0x563fb6d6acb8 in void std::vector<ast::Node*, std::allocator<ast::Node*> >::_M_realloc_insert<ast::Node*>(__gnu_cxx::__normal_iterator<ast::Node**, std::vector<ast::Node*, std::allocator<ast::Node*> > >, ast::Node*&&) /usr/include/c++/11/bits/vector.tcc:440
+    #6 0x563fb6d6a730 in ast::Node*& std::vector<ast::Node*, std::allocator<ast::Node*> >::emplace_back<ast::Node*>(ast::Node*&&) /usr/include/c++/11/bits/vector.tcc:121
+    #7 0x563fb6d6a1bb in std::vector<ast::Node*, std::allocator<ast::Node*> >::push_back(ast::Node*&&) /usr/include/c++/11/bits/stl_vector.h:1204
+    #8 0x563fb6d68fa8 in ast::NodeList::PushBack(ast::Node*) src/ast_node.cpp:7
+    #9 0x563fb6d973f6 in yyparse() src/parser.y:351
+    #10 0x563fb6d9c822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #11 0x563fb6d866c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #12 0x563fb6d861b1 in main src/compiler.cpp:26
+    #13 0x7f82bea29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+SUMMARY: AddressSanitizer: 176 byte(s) leaked in 6 allocation(s).

@@ -1,0 +1,10 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/strings/puts.c...
+# DEBUG: primary_expression is an IDENTIFIER: fakeputs
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.s.printed
+Compiling parsed AST...
+fakeputs
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.s

@@ -1,0 +1,7 @@
+int fib( 
+) {if ((x <= 0)) return 0;
+
+if () return 1;
+
+return (fib((x - 1),  + fib((x - 2), );
+}

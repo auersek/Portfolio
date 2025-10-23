@@ -1,0 +1,25 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/float/pow.c...
+# DEBUG: primary_expression is a FLOAT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: primary_expression is an IDENTIFIER: n
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: i
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: acc
+# DEBUG: primary_expression is an IDENTIFIER: acc
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: acc
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s.printed
+Compiling parsed AST...
+FindMem in Assign acc
+ParameterList check
+Array Index: 
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s

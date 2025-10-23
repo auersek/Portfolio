@@ -1,0 +1,22 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/functions/call_mutual_recursive.c...
+# DEBUG: primary_expression is an IDENTIFIER: n
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: r2
+# DEBUG: primary_expression is an IDENTIFIER: n
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: r2
+# DEBUG: primary_expression is an IDENTIFIER: n
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.s.printed
+Compiling parsed AST...
+0r2
+0r2
+0Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.s

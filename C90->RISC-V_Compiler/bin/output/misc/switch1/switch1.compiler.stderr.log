@@ -1,0 +1,64 @@
+=================================================================
+==2384==ERROR: AddressSanitizer: heap-use-after-free on address 0x603000000070 at pc 0x55ccdf514652 bp 0x7ffdeece1c90 sp 0x7ffdeece1c80
+READ of size 8 at 0x603000000070 thread T0
+    #0 0x55ccdf514651 in ast::NodeList::Print(std::ostream&) const src/ast_node.cpp:31
+    #1 0x55ccdf4fdd7c in ast::FunctionDefinition::Print(std::ostream&) const src/ast_function_definition.cpp:50
+    #2 0x55ccdf514694 in ast::NodeList::Print(std::ostream&) const src/ast_node.cpp:31
+    #3 0x55ccdf531b23 in PrettyPrint(ast::Node* const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:61
+    #4 0x55ccdf531318 in main src/compiler.cpp:37
+    #5 0x7fc005e29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #6 0x7fc005e29e3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #7 0x55ccdf3c8694 in _start (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x2e3694)
+
+0x603000000070 is located 0 bytes inside of 32-byte region [0x603000000070,0x603000000090)
+freed by thread T0 here:
+    #0 0x55ccdf45adaf in operator delete(void*, unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x375daf)
+    #1 0x55ccdf542bda in yyparse() src/parser.y:365
+    #2 0x55ccdf547822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #3 0x55ccdf5316c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #4 0x55ccdf5311b1 in main src/compiler.cpp:26
+    #5 0x7fc005e29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+previously allocated by thread T0 here:
+    #0 0x55ccdf459d47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x55ccdf54eae4 in yylex() src/lexer.flex:60
+    #2 0x55ccdf53be10 in yyparse() build/parser.tab.cpp:1987
+    #3 0x55ccdf547822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #4 0x55ccdf5316c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #5 0x55ccdf5311b1 in main src/compiler.cpp:26
+    #6 0x7fc005e29d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+SUMMARY: AddressSanitizer: heap-use-after-free src/ast_node.cpp:31 in ast::NodeList::Print(std::ostream&) const
+Shadow bytes around the buggy address:
+  0x0c067fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c067fff8000: fa fa 00 00 00 fa fa fa fd fd fd fd fa fa[fd]fd
+  0x0c067fff8010: fd fd fa fa 00 00 00 fa fa fa 00 00 00 00 fa fa
+  0x0c067fff8020: 00 00 00 fa fa fa fd fd fd fd fa fa 00 00 00 00
+  0x0c067fff8030: fa fa 00 00 00 00 fa fa 00 00 00 00 fa fa fa fa
+  0x0c067fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==2384==ABORTING

@@ -1,0 +1,3391 @@
+# Combined source code dump
+# Generated on Fri Oct 17 15:14:46 BST 2025
+
+====================================================================
+>>> File: src/ast_arithmetic+logical.cpp
+====================================================================
+
+#include "../include/ast_arithmetic+logical.hpp"
+
+// Add operator
+namespace ast{
+
+    void AddOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        TypeSpecifier type1 = context.getVarType(a->getId());
+        TypeSpecifier type2 = context.getVarType(b->getId());
+
+        std::cout << context.getIsPointer(a->getId());
+
+        if (context.getIsPointer(a->getId()))
+        {
+            std::cout << "calling arithmetic" << std::endl;
+            int mem_size = TYPE_SIZE_INT;
+            if(context.getVarType(a->getId()) == TypeSpecifier::INT){
+                mem_size = TYPE_SIZE_INT;
+            }
+            else if (context.getVarType(a->getId()) == TypeSpecifier::FLOAT)
+            {
+                mem_size = TYPE_SIZE_FLOAT;
+            }
+            else if (context.getVarType(a->getId()) == TypeSpecifier::DOUBLE)
+            {
+                mem_size = TYPE_SIZE_DOUBLE;
+            }
+            else if (context.getVarType(a->getId()) == TypeSpecifier::CHAR)
+            {
+                mem_size = TYPE_SIZE_CHAR;
+            }
+            else{
+                mem_size = 0;
+            }
+            std::string b_reg = context.regAlloc();
+            a->EmitRISC(stream, context, destReg);
+            b->EmitRISC(stream, context, b_reg);
+            stream << "addi " << destReg << ", " << destReg << ", " << mem_size << std::endl;
+            context.regDalloc(b_reg);
+        }
+
+        else if (context.getIsPointer(b->getId()))
+        {
+            std::cout << "calling arithmetic" << std::endl;
+            int mem_size = TYPE_SIZE_INT;
+            if(context.getVarType(b->getId()) == TypeSpecifier::INT){
+                mem_size = TYPE_SIZE_INT;
+            }
+            else if (context.getVarType(b->getId()) == TypeSpecifier::FLOAT)
+            {
+                mem_size = TYPE_SIZE_FLOAT;
+            }
+            else if (context.getVarType(b->getId()) == TypeSpecifier::DOUBLE)
+            {
+                mem_size = TYPE_SIZE_DOUBLE;
+            }
+            else if (context.getVarType(b->getId()) == TypeSpecifier::CHAR)
+            {
+                mem_size = TYPE_SIZE_CHAR;
+            }
+            else{
+                mem_size = 0;
+            }
+            std::string b_reg = context.regAlloc();
+            a->EmitRISC(stream, context, destReg);
+            b->EmitRISC(stream, context, b_reg);
+            stream << "addi " << destReg << ", " << destReg << ", " << mem_size << std::endl;
+            context.regDalloc(b_reg);
+        }
+        // if not pointer, regular operation
+        else{
+            if(type1 == TypeSpecifier::FLOAT || type2 == TypeSpecifier::FLOAT){         // floats
+                std::string a_reg = context.floatRegAlloc();
+                a->EmitRISC(stream, context, a_reg);
+                stream << "fmv.s " << destReg << ", " << a_reg << std::endl;
+                context.floatRegDalloc(a_reg);
+                std::string b_reg = context.floatRegAlloc();
+                b->EmitRISC(stream, context, b_reg);
+                stream << "fadd.s " << destReg << ", " << destReg << ", " << b_reg<< std::endl;
+                context.floatRegDalloc(b_reg);
+            }
+            else if(type1 == TypeSpecifier::DOUBLE || type2 == TypeSpecifier::DOUBLE){
+                std::string b_reg = context.floatRegAlloc();
+                a->EmitRISC(stream, context, destReg);
+                b->EmitRISC(stream, context, b_reg);
+                stream << "fadd.d " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+                context.floatRegDalloc(b_reg);
+            }
+            else{
+                std::string b_reg = context.regAlloc();
+                a->EmitRISC(stream, context, destReg);
+                b->EmitRISC(stream, context, b_reg);
+                stream << "add " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+                context.regDalloc(b_reg);
+            }
+        }
+    }
+
+void AddOp::Print(std::ostream &stream) const
+{
+    stream << "(";
+    a->Print(stream);
+    stream << " + ";
+    b->Print(stream);
+    stream << ")";
+}
+
+// sub operator
+
+void SubOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+    TypeSpecifier type1 = context.getVarType(a->getId());
+    TypeSpecifier type2 = context.getVarType(b->getId());
+
+    std::cout << context.getIsPointer(a->getId());
+
+    if (context.getIsPointer(a->getId()))
+    {
+        std::cout << "calling arithmetic" << std::endl;
+        int mem_size = TYPE_SIZE_INT;
+        if(context.getVarType(b->getId()) == TypeSpecifier::INT){
+            mem_size = TYPE_SIZE_INT;
+        }
+        else if (context.getVarType(b->getId()) == TypeSpecifier::FLOAT)
+        {
+            mem_size = TYPE_SIZE_FLOAT;
+        }
+        else if (context.getVarType(b->getId()) == TypeSpecifier::DOUBLE)
+        {
+            mem_size = TYPE_SIZE_DOUBLE;
+        }
+        else if (context.getVarType(b->getId()) == TypeSpecifier::CHAR)
+        {
+            mem_size = TYPE_SIZE_CHAR;
+        }
+        else{
+            mem_size = 0;
+        }
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "addi " << destReg << ", " << destReg << ", " << mem_size << std::endl;
+        stream << "mul " << b_reg << ", " << b_reg << ", " << destReg << std::endl;
+        stream << "add " << destReg << ", " << b_reg << ", zero" << std::endl;
+        context.regDalloc(b_reg);
+
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "sub " << destReg << ", " << destReg << ", " << a_reg << std::endl;
+        context.regDalloc(a_reg);
+    }
+    else if ((context.getIsPointer(b->getId()) && b->getEntity() != EntitySpecifier::POINTER_DEREFERENCE) || b->getEntity() == EntitySpecifier::POINTER_ADDRESS)
+    {
+        int mem_size = TYPE_SIZE_INT;
+        if(context.getVarType(b->getId()) == TypeSpecifier::INT){
+            mem_size = TYPE_SIZE_INT;
+        }
+        else if (context.getVarType(b->getId()) == TypeSpecifier::FLOAT)
+        {
+            mem_size = TYPE_SIZE_FLOAT;
+        }
+        else if (context.getVarType(b->getId()) == TypeSpecifier::DOUBLE)
+        {
+            mem_size = TYPE_SIZE_DOUBLE;
+        }
+        else if (context.getVarType(b->getId()) == TypeSpecifier::CHAR)
+        {
+            mem_size = TYPE_SIZE_CHAR;
+        }
+        else{
+            mem_size = 0;
+        }
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "addi " << destReg << ", " << destReg << ", " << mem_size << std::endl;
+        stream << "mul " << a_reg << ", " << a_reg << ", " << destReg << std::endl;
+        stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+        context.regDalloc(a_reg);
+
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "sub " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.regDalloc(b_reg);
+    }
+    else
+    {
+        if ((type1 == TypeSpecifier::INT || type2 == TypeSpecifier::INT))
+        {
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "sub " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.regDalloc(b_reg);
+        }
+        else if (type1 == TypeSpecifier::CHAR || type2 == TypeSpecifier::CHAR)
+        {
+            std::string a_reg = context.floatRegAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "sub " << destReg << ", " << a_reg << ", zero" << std::endl;
+            context.regDalloc(a_reg);
+            std::string b_reg = context.floatRegAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "sub " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.regDalloc(b_reg);
+        }
+        else if ((type1 == TypeSpecifier::FLOAT || type2 == TypeSpecifier::FLOAT))
+        {
+            std::string a_reg = context.floatRegAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "fmv.s " << destReg << ", " << a_reg << std::endl;
+            context.floatRegDalloc(a_reg);
+            std::string b_reg = context.floatRegAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "fsub.s " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.floatRegDalloc(b_reg);
+        }
+        else if ((type1 == TypeSpecifier::DOUBLE || type2 == TypeSpecifier::DOUBLE))
+        {
+            std::string a_reg = context.floatRegAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "fmv.d " << destReg << ", " << a_reg << std::endl;
+            context.floatRegDalloc(a_reg);
+            std::string b_reg = context.floatRegAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "fsub.d " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.floatRegDalloc(b_reg);
+        }
+    }
+}
+
+
+void SubOp::Print(std::ostream &stream) const
+{
+    stream << "(";
+    a->Print(stream);
+    stream << " - ";
+    b->Print(stream);
+    stream << ")";
+}
+
+
+// multiply operation
+
+void MulOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+    TypeSpecifier type1 = context.getVarType(a->getId());
+    TypeSpecifier type2 = context.getVarType(b->getId());
+    if (type1 == TypeSpecifier::INT || type2 == TypeSpecifier::INT)
+    {
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+        context.regDalloc(a_reg);
+
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "mul " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.regDalloc(b_reg);
+    }
+    else if (type1 == TypeSpecifier::CHAR || type2 == TypeSpecifier::CHAR)
+    {
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "add " << destReg << ", " << a_reg << std::endl;
+        context.regDalloc(a_reg);
+
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "mul " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.regDalloc(b_reg);
+    }
+    else if ((type1 == TypeSpecifier::FLOAT || type2 == TypeSpecifier::FLOAT))
+    {
+        std::string a_reg = context.floatRegAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "fmv.s " << destReg << ", " << a_reg << std::endl;
+        context.floatRegDalloc(a_reg);
+        std::string b_reg = context.floatRegAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "fmul.s " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.floatRegDalloc(b_reg);
+    }
+    else if ((type1 == TypeSpecifier::DOUBLE || type2 == TypeSpecifier::DOUBLE))
+    {
+        std::string a_reg = context.floatRegAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "fmv.d " << destReg << ", " << a_reg << std::endl;
+        context.floatRegDalloc(a_reg);
+        std::string b_reg = context.floatRegAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "fmul.d " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.floatRegDalloc(b_reg);
+    }
+}
+
+    void MulOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " * ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+
+    // divide operation
+
+    void DivOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+
+    {
+        TypeSpecifier type1 = context.getVarType(a->getId());
+        TypeSpecifier type2 = context.getVarType(b->getId());
+        if (type1 == TypeSpecifier::INT || type2 == TypeSpecifier::INT)
+        {
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "div " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.regDalloc(b_reg);
+        }
+        else if (type1 == TypeSpecifier::CHAR || type2 == TypeSpecifier::CHAR)
+        {
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "add " << destReg << ", " << a_reg << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "div " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.regDalloc(b_reg);
+        }
+        else if ((type1 == TypeSpecifier::FLOAT || type2 == TypeSpecifier::FLOAT))
+        {
+            std::string a_reg = context.floatRegAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "fmv.s " << destReg << ", " << a_reg << std::endl;
+            context.floatRegDalloc(a_reg);
+            std::string b_reg = context.floatRegAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "fdiv.s " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.floatRegDalloc(b_reg);
+        }
+        else if ((type1 == TypeSpecifier::DOUBLE || type2 == TypeSpecifier::DOUBLE))
+        {
+            std::string a_reg = context.floatRegAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "fmv.d " << destReg << ", " << a_reg << std::endl;
+            context.floatRegDalloc(a_reg);
+            std::string b_reg = context.floatRegAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "fdiv.d " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.floatRegDalloc(b_reg);
+        }
+    }
+
+    void DivOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " / ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+
+    //Bitwise And Operation
+    void BitAndOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+
+    {
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+        context.regDalloc(a_reg);
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "and " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.regDalloc(b_reg);
+    }
+
+    void BitAndOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " & ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier BitAndOp::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+
+    //Bitwise Or Operation
+
+    void BitOrOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+
+    {
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+        context.regDalloc(a_reg);
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "or " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.regDalloc(b_reg);
+    }
+
+    void BitOrOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " | ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier BitOrOp::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT; // Default type for subtraction
+    }
+
+    //Bitwise Xor Operation
+
+    void BitXorOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+
+    {
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+        context.regDalloc(a_reg);
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+        stream << "xor " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        context.regDalloc(b_reg);
+    }
+
+    void BitXorOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " ^ ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier BitXorOp::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+    //Logical And Operation
+
+    void LogAndOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        if (a -> getType(context) == TypeSpecifier::INT || a -> getType(context) == TypeSpecifier::CHAR || a -> getType(context) == TypeSpecifier::UNSIGNED)
+        {
+            std::string true_label = context.labelAlloc("and_true");
+            std::string false_label = context.labelAlloc("and_false");
+
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "beqz " << a_reg << ", " << false_label << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "beqz " << b_reg << ", " << false_label << std::endl;
+            stream << "li " << destReg << ", 1" << std::endl;
+            stream << "j " << true_label << std::endl;
+            context.regDalloc(b_reg);
+
+            stream << false_label << ":" << std::endl;
+            stream << "li " << destReg << ", 0" << std::endl;
+            stream << true_label << ":" << std::endl;
+        }
+        else {
+            std::string true_label = context.labelAlloc("and_true");
+            std::string false_label = context.labelAlloc("and_false");
+
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "beqz " << a_reg << ", " << false_label << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "beqz " << b_reg << ", " << false_label << std::endl;
+            stream << "li " << destReg << ", 1" << std::endl;
+            stream << "j " << true_label << std::endl;
+            context.regDalloc(b_reg);
+
+            stream << false_label << ":" << std::endl;
+            stream << "li " << destReg << ", 0" << std::endl;
+            stream << true_label << ":" << std::endl;
+        }
+    }
+
+    void LogAndOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " && ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier LogAndOp::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+    //Logical Or Operation
+
+    void LogOrOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        if (a -> getType(context) == TypeSpecifier::INT || a -> getType(context) == TypeSpecifier::CHAR || a -> getType(context) == TypeSpecifier::UNSIGNED)
+        {
+            std::string true_label = context.labelAlloc("or_true");
+            std::string false_label = context.labelAlloc("or_false");
+
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "bnez " << a_reg << ", " << true_label << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "bnez " << b_reg << ", " << true_label << std::endl;
+            stream << "li " << destReg << ", 0" << std::endl;
+            stream << "j " << false_label << std::endl;
+            context.regDalloc(b_reg);
+
+            stream << true_label << ":" << std::endl;
+            stream << "li " << destReg << ", 1" << std::endl;
+            stream << false_label << ":" << std::endl;
+        }
+        else { //when we implement float and double
+            std::string true_label = context.labelAlloc("or_true");
+            std::string false_label = context.labelAlloc("or_false");
+
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "bnez " << a_reg << ", " << true_label << std::endl;
+            context.regDalloc(a_reg);
+
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "bnez " << b_reg << ", " << true_label << std::endl;
+            stream << "li " << destReg << ", 0" << std::endl;
+            stream << "j " << false_label << std::endl;
+            context.regDalloc(b_reg);
+
+            stream << true_label << ":" << std::endl;
+            stream << "li " << destReg << ", 1" << std::endl;
+            stream << false_label << ":" << std::endl;
+        }
+    }
+
+    void LogOrOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " || ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier LogOrOp::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+    //Modulus Operation
+
+    void ModOp::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        if (getType(context) == TypeSpecifier::INT)
+        {
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+            context.regDalloc(a_reg);
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "rem " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.regDalloc(b_reg);
+        }
+        else if (getType(context) == TypeSpecifier::UNSIGNED)
+        {
+            std::string a_reg = context.regAlloc();
+            a->EmitRISC(stream, context, a_reg);
+            stream << "add " << destReg << ", " << a_reg << ", zero" << std::endl;
+            context.regDalloc(a_reg);
+            std::string b_reg = context.regAlloc();
+            b->EmitRISC(stream, context, b_reg);
+            stream << "remu " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+            context.regDalloc(b_reg);
+        }
+    }
+
+    void ModOp::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " % ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier ModOp::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT; // Default type for subtraction
+    }
+
+
+
+} //namespace ast
+
+
+
+====================================================================
+>>> File: src/ast_array_indexing.cpp
+====================================================================
+
+#include "../include/ast_array_indexing.hpp"
+#include "../include/ast_context.hpp"
+
+namespace ast {
+
+    void ArrayIndex::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const{
+
+        // stream << "DEBUG: var.type = " << static_cast<int>((context.getParam(identifier_->getId())).type) << "\n";
+
+        std::string index_mem = context.getMemLocation(getId());
+        std::string index_reg = context.regAlloc();
+        index_->EmitRISC(stream, context, index_reg);
+
+        // this assigns memory with respect to the type in arrays
+        // multiplied used to assign bytes, e.g. reg = reg x 8
+
+        if (context.getVarType(getId()) == TypeSpecifier::FLOAT){
+            stream << "li " << destReg << ", " << TYPE_SIZE_FLOAT << std::endl;
+            stream << "mul " << index_reg << ", " << index_reg << ", "
+                   << destReg << std::endl;
+        }
+        else if (context.getVarType(getId()) == TypeSpecifier::DOUBLE){
+            stream << "li " << destReg << ", " << TYPE_SIZE_DOUBLE << std::endl;
+            stream << "mul " << index_reg << ", " << index_reg << ", "
+                   << destReg << std::endl;
+        }
+        else if (context.getVarType(getId()) == TypeSpecifier::CHAR){
+            stream << "li " << destReg << ", " << TYPE_SIZE_CHAR << std::endl;
+            stream << "mul " << index_reg << ", " << index_reg << ", "
+                   << destReg << std::endl;
+        }
+        else if (context.getVarType(getId()) == TypeSpecifier::STRING){
+            stream << "li " << destReg << ", " << TYPE_SIZE_STRING << std::endl;
+            stream << "mul " << index_reg << ", " << index_reg << ", "
+                   << destReg << std::endl;
+        }
+        else{
+            stream << "li " << destReg << ", " << TYPE_SIZE_INT << std::endl;
+            stream << "mul " << index_reg << ", " << index_reg << ", "
+                   << destReg << std::endl;
+        }
+
+
+        stream << "li " << destReg << ", " << index_mem << std::endl;
+        stream << "sub " << destReg << ", " << destReg << ", " << index_reg
+               << std::endl;
+        stream << "add " << destReg << ", " << destReg << ", sp" << std::endl;
+        stream << "mv " << index_reg << ", " << destReg << std::endl;
+        if (context.getVarType(getId()) == TypeSpecifier::INT)
+        {
+            stream << "lw " << destReg << ", 0(" << index_reg << ")" << std::endl;
+        }
+        else if (context.getVarType(getId()) == TypeSpecifier::FLOAT){
+            stream << "flw " << destReg << ", 0(" << index_reg << ")" << std::endl;
+        }
+        else if (context.getVarType(getId()) == TypeSpecifier::DOUBLE){
+            stream << "fld " << destReg << ", 0(" << index_reg << ")" << std::endl;
+        }
+        else if (context.getVarType(getId()) == TypeSpecifier::CHAR){
+            stream << "lbu " << destReg << ", 0(" << index_reg << ")" << std::endl;
+        }
+        else{
+            stream << "lw " << destReg << ", 0(" << index_reg << ")" << std::endl;
+        }
+
+        if (context.getArrayFlag())
+        {
+            context.setArrIndex(index_reg);
+        }
+        else
+        {
+            context.regDalloc(index_reg);
+        }
+
+    }
+    void ArrayIndex::Print(std::ostream &stream) const
+    {
+        identifier_->Print(stream);
+        stream << "[";
+        index_->Print(stream);
+        stream << "]";
+    }
+
+    TypeSpecifier ArrayIndex::getType(Context &context) const
+    {
+        return context.getVarType(identifier_->getId());;
+    }
+    EntitySpecifier ArrayIndex::getEntity() const
+    {
+        return EntitySpecifier::ARRAY;
+    }
+
+}
+
+
+====================================================================
+>>> File: src/ast_arrays.cpp
+====================================================================
+
+#include "../include/ast_arrays.hpp"
+#include "../include/ast_context.hpp"
+
+namespace ast {
+
+    void ArrayDeclare::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const{
+        const Identifier* id_getId = dynamic_cast<const Identifier*>(identifier);
+        std::string array_id = id_getId->getId();
+        context.newArray(array_id, size->getVal());
+        (void) destReg;
+        stream << "call " << array_id;
+    }
+    void ArrayDeclare::Print(std::ostream &stream) const
+    {
+        identifier->Print(stream);
+        stream << "[";
+        size->Print(stream);
+        stream << "]";
+    }
+
+
+    TypeSpecifier ArrayDeclare::getType(Context &context) const
+    {
+        return context.getVarType(identifier->getId());;
+    }
+
+    EntitySpecifier ArrayDeclare::getEntity() const
+    {
+        return EntitySpecifier::ARRAY;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================================================================
+>>> File: src/ast_assign.cpp
+====================================================================
+
+#include "../include/ast_assign.hpp"
+#include "../include/ast_context.hpp"
+
+namespace ast {
+
+    void Assignment::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        std::string lhs_reg = context.regAlloc();
+        std::string rhs_reg = context.regAlloc();
+
+        TypeSpecifier type_l = context.getVarType(unary_expression_->getId());
+        TypeSpecifier type_r = context.getVarType(assignment_expression_->getId());
+        // stream << "DEBUG: var.type = " << static_cast<int>(type) << "\n";
+
+        if (type_l == TypeSpecifier::FLOAT)
+        {
+            lhs_reg = context.floatRegAlloc();
+        }
+        else if (type_l == TypeSpecifier::DOUBLE)
+        {
+            lhs_reg = context.floatRegAlloc();
+        }
+        else if (type_l == TypeSpecifier::INT)
+        {
+            lhs_reg = context.regAlloc();
+        }
+        else if (type_l == TypeSpecifier::CHAR)
+        {
+            lhs_reg = context.regAlloc();
+        }
+
+
+        if (type_r == TypeSpecifier::FLOAT)
+        {
+            rhs_reg = context.floatRegAlloc();
+        }
+        else if (type_r == TypeSpecifier::DOUBLE)
+        {
+            rhs_reg = context.floatRegAlloc();
+        }
+        else if (type_r == TypeSpecifier::INT)
+        {
+            rhs_reg = context.regAlloc();
+        }
+        else if (type_r == TypeSpecifier::CHAR)
+        {
+            rhs_reg = context.regAlloc();
+        }
+
+        // Entity Array set flags
+
+        if (unary_expression_->getEntity() == EntitySpecifier::ARRAY)
+        {
+            context.setArrayFlag(true);
+            unary_expression_->EmitRISC(stream, context, lhs_reg);
+            context.setArrayFlag(false);
+        }
+        else
+        {
+            unary_expression_->EmitRISC(stream, context, lhs_reg);
+        }
+
+        // Assignment operators
+
+        assignment_expression_->EmitRISC(stream, context, rhs_reg);
+
+        if(assignment_operator_ == "="){
+            stream << "mv " << lhs_reg << ", " << rhs_reg << std::endl;
+        }
+        else if(assignment_operator_ == "+="){
+            stream << "add " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+        }
+        else if(assignment_operator_ == "-="){
+            stream << "sub " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+        else if(assignment_operator_ == "*="){
+            stream << "mul " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+        else if(assignment_operator_ == "/="){
+            stream << "div " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "%="){
+            stream << "rem " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        //bitwise
+
+        else if(assignment_operator_ == "&="){
+            stream << "and " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "|="){
+            stream << "or " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "^="){
+            stream << "xor " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == ">>="){
+            stream << "sra " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "<<="){
+            stream << "sll " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        std::cout << "FindMem in Assign " << unary_expression_->getId() << std::endl;
+        std::string MemLocation = context.getMemLocation(unary_expression_->getId());
+
+        if (type_l == TypeSpecifier::CHAR)
+        {
+            stream << "sb " << lhs_reg << ", " << MemLocation << "(s0)" << std::endl;
+        }
+        else
+        {
+            // stream << "DEBUG: ent.type = " << static_cast<int>(unary_expression_->getEntity()) << "\n";
+            if (unary_expression_->getEntity() != EntitySpecifier::POINTER_DEREFERENCE){
+                std::cout << "ParameterList check" << std::endl;
+                stream << "sw " << lhs_reg << ", " << MemLocation << "(s0)" << std::endl;
+            }
+
+        }
+
+        std::cout << "Array Index: " << context.getArrIndex() << std::endl;
+        if(unary_expression_->getEntity() == EntitySpecifier::POINTER_DEREFERENCE){
+
+            std::string pointer_mem = context.getMemLocation(unary_expression_->getId());
+            std::cout << "Assign file lw" << std::endl;
+            stream << "lw " << rhs_reg << ", " << pointer_mem << "(s0)" << std::endl;
+
+            if(context.getVarType(unary_expression_->getId()) == TypeSpecifier::FLOAT){
+
+                stream << "fsw " << lhs_reg << ", 0(" << rhs_reg << ")" << std::endl;
+            }
+            else if(context.getVarType(unary_expression_->getId()) == TypeSpecifier::DOUBLE){
+
+                stream << "fsd " << lhs_reg << ", 0(" << rhs_reg << ")" << std::endl;
+            }
+            else if(context.getVarType(unary_expression_->getId()) == TypeSpecifier::CHAR){
+
+                stream << "sb " << lhs_reg << ", 0(" << rhs_reg << ")" << std::endl;
+            }
+            else{
+                std::cout << "Calling Assign SW" << std::endl;
+                stream << "sw " << lhs_reg << ", 0(" << rhs_reg << ")" << std::endl;
+            }
+        }
+        else if(unary_expression_->getEntity() == EntitySpecifier::ARRAY){
+
+            TypeSpecifier array_types = context.getVarType(unary_expression_->getId());
+            std::string index_reg = context.getArrIndex();
+            if (array_types == TypeSpecifier::FLOAT)
+            {
+                stream << "fsw " << lhs_reg << ", 0(" << index_reg << ")" << std::endl;
+            }
+            else if (array_types == TypeSpecifier::DOUBLE)
+            {
+                stream << "fsd " << lhs_reg << ", 0(" << index_reg << ")" << std::endl;
+            }
+            else if (array_types == TypeSpecifier::CHAR)
+            {
+                stream << "sb " << lhs_reg << ", 0(" << index_reg << ")" << std::endl;
+            }
+            else
+            {
+                stream << "sw " << lhs_reg << ", 0(" << index_reg << ")" << std::endl;
+            }
+            context.regDalloc(index_reg);
+            context.setArrIndex("");
+        }
+
+        destReg = lhs_reg; // needed to be added to update destReg
+
+        context.regDalloc(rhs_reg);
+        context.regDalloc(lhs_reg);
+
+    }
+
+    void Assignment::Print(std::ostream &stream) const
+    {
+        unary_expression_->Print(stream);
+        stream << " " << assignment_operator_ << " ";
+        assignment_expression_->Print(stream);
+        stream << ";" << std::endl;
+    }
+
+    TypeSpecifier Assignment::getType(Context &context) const
+    {
+        return unary_expression_->getType(context);
+    }
+
+}
+
+
+====================================================================
+>>> File: src/ast_break.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_break.hpp"
+
+
+void ast::BreakKeyWord::EmitRISC(std::ostream &stream, Context &context, std::string &) const {
+    stream << "nop" << std::endl;        
+    context.exitLoop();
+}
+void ast::BreakKeyWord::Print(std::ostream &stream) const {
+    stream << "break;" << std::endl;
+}
+
+
+
+
+====================================================================
+>>> File: src/ast_comp_statement.cpp
+====================================================================
+
+#include "../include/ast_comp_statement.hpp"
+
+namespace ast {
+
+
+    void CompStatement::EmitRISC(std::ostream& stream, Context& context, std::string &destReg) const
+    {
+        context.addToScope(stream);
+        if (dec_list_ != nullptr) {
+            // stream << "#twice" << std::endl;
+            dec_list_->EmitRISC(stream, context, destReg);
+        }
+        if (stat_list_ != nullptr) {
+            // stream << "#once" << std::endl;
+            stat_list_->EmitRISC(stream, context, destReg);
+        }
+        context.removeScope();
+    }
+
+    void CompStatement::Print(std::ostream& stream) const {
+        stream << "SKIBIDI BOP" << std::endl;
+    }
+
+};
+
+
+
+
+====================================================================
+>>> File: src/ast_compoundassignment.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_compoundassignment.hpp"
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_context.hpp"
+
+namespace ast {
+
+    void CompoundAssignment::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        std::string lhs_reg = context.regAlloc();
+        std::string rhs_reg = context.regAlloc();
+
+        TypeSpecifier result_type = getType(context);
+
+        unary_expression_->EmitRISC(stream, context, lhs_reg);
+        assignment_expression_->EmitRISC(stream, context, rhs_reg);
+
+        if(assignment_operator_ == "="){
+            stream << "mv " << lhs_reg << ", " << rhs_reg << std::endl;
+        }
+        else if(assignment_operator_ == "+="){
+            stream << "add " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+        else if(assignment_operator_ == "-="){
+            stream << "sub " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+        else if(assignment_operator_ == "*="){
+            stream << "mul " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+        else if(assignment_operator_ == "/="){
+            stream << "div " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "%="){
+            stream << "rem " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        //bitwise
+
+        else if(assignment_operator_ == "&="){
+            stream << "and " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "|="){
+            stream << "or " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "^="){
+            stream << "xor " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == ">>="){
+            stream << "sra " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        else if(assignment_operator_ == "<<="){
+            stream << "sll " << lhs_reg << ", " << lhs_reg << ", " << rhs_reg << std::endl;
+
+        }
+
+        std::string MemLocation = context.getMemLocation(unary_expression_->getId());
+        if (result_type == TypeSpecifier::CHAR)
+        {
+            stream << "sb " << lhs_reg << ", " << MemLocation << "(s0)" << std::endl;
+        }
+        else
+        {
+            stream << "sw " << lhs_reg << ", " << MemLocation << "(s0)" << std::endl;
+        }
+
+        destReg = lhs_reg; // needed to be added to update destReg
+
+        context.regDalloc(rhs_reg);
+        context.regDalloc(lhs_reg);
+
+    }
+
+    void CompoundAssignment::Print(std::ostream &stream) const
+    {
+        unary_expression_->Print(stream);
+        stream << " " << assignment_operator_ << " ";
+        assignment_expression_->Print(stream);
+        stream << ";" << std::endl;
+    }
+
+    TypeSpecifier CompoundAssignment::getType(Context &context) const
+    {
+        return unary_expression_->getType(context);
+    }
+
+}
+
+
+====================================================================
+>>> File: src/ast_conditional.cpp
+====================================================================
+
+
+
+====================================================================
+>>> File: src/ast_constant.cpp
+====================================================================
+
+#include "../include/ast_constant.hpp"
+
+namespace ast {
+
+
+void ast::IntConstant::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+    (void)context;
+    stream << "li " << destReg << ", " << value_ << std::endl;
+}
+
+void ast::FloatConstant::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+    (void)context;
+    stream << "flw " << destReg << ", " << value_ << std::endl;
+}
+
+
+void ast::IntConstant::Print(std::ostream& stream) const
+{
+    stream << value_;
+}
+
+
+void ast::FloatConstant::Print(std::ostream& stream) const
+{
+    stream << value_;
+}
+
+int IntConstant::getVal() const
+{
+    return value_;
+}
+
+} // namespace ast
+
+
+====================================================================
+>>> File: src/ast_context.cpp
+====================================================================
+
+#include "ast_context.hpp"
+
+
+====================================================================
+>>> File: src/ast_continue.cpp
+====================================================================
+
+#include "../include/ast_continue.hpp"
+
+namespace ast {
+
+
+void ContinueStatement::EmitRISC(std::ostream &stream, Context &context, std::string&) const {
+
+    stream << "j " << context.loopConditionLabel() << std::endl;             // Im not sure, I think loop condition is the right one
+
+}
+
+void ast::ContinueStatement::Print(std::ostream &stream) const {
+    stream << "continue;" << std::endl;
+
+}
+
+}
+
+
+
+
+====================================================================
+>>> File: src/ast_direct_declarator.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_direct_declarator.hpp"
+
+namespace ast {
+
+    void DirectDeclarator::EmitRISC(std::ostream& stream, Context& context, std::string &) const
+    {
+        std::string temp;
+        context.addToScope(stream);
+
+        context.initalizeStack(stream);
+
+        // Put parameters on the stack
+        if (parameter_list_ != nullptr)
+        {
+            parameter_list_->EmitRISC(stream, context, temp);
+        }
+        // }
+    }
+
+    std::string DirectDeclarator::getId() const { return identifier_->getId(); }
+
+    void DirectDeclarator::Print(std::ostream& stream) const
+    {
+        if (identifier_) {
+            identifier_->Print(stream);
+        }
+
+        if (parameter_list_ != nullptr) {
+            // stream << "THERE IS A LIST";
+            // stream << parameter_list_->getId();
+            parameter_list_->Print(stream);
+        }
+    }
+
+} // namespace ast
+
+
+====================================================================
+>>> File: src/ast_enum.cpp
+====================================================================
+
+#include "../include/ast_enum.hpp"
+
+namespace ast {
+
+
+
+
+    void EnumSpecifier::EmitRISC(std::ostream &stream, Context &context, std::string &) const {
+        std::string temp;
+        context.createEnum(identifier_);
+        enumerator_list_->EmitRISC(stream, context,temp);
+        context.resEnum();
+    }
+
+    void Enumerate::EmitRISC(std::ostream &stream, Context &context, std::string &) const {
+        (void)stream;
+        if (constant_expression_ != nullptr)
+        {
+            context.enumAddValue(identifier_, constant_expression_->getVal());
+        }
+        else
+        {
+            context.enumAddValue(identifier_, context.setEnumValue());
+        }
+    }
+
+    TypeSpecifier Enumerate::getType() const {
+        return TypeSpecifier::INT;
+    }
+
+    std::string Enumerate::getId() const {
+        return identifier_;
+    }
+
+    EntitySpecifier Enumerate::getEntity() const {
+        return EntitySpecifier::ENUMERATOR;
+    }
+
+    void Enumerate::Print(std::ostream &stream) const
+    {
+        std::cout << identifier_ << " : enumerator::print" << std::endl;
+        stream << identifier_;
+        if (constant_expression_ != nullptr)
+        {
+            stream << " = ";
+            constant_expression_->Print(stream);
+        }
+    }
+
+    int Enumerate::getVal() const {
+        if (constant_expression_ != nullptr) {
+            return constant_expression_->getVal();
+        }
+        throw std::runtime_error("Enumerate: No constant value provided.");
+    }
+
+
+    std::string EnumSpecifier::getId() const {
+        return identifier_;
+    }
+
+    EntitySpecifier EnumSpecifier::getEntity() const {
+        return EntitySpecifier::ENUM_SPECIFIER;
+    }
+
+    void EnumSpecifier::Print(std::ostream &stream) const
+    {
+        stream << "enum " << identifier_ << " {" << std::endl;
+        if (enumerator_list_ != nullptr){
+            enumerator_list_->Print(stream);
+        }
+        stream << "}";
+    }
+}
+
+
+====================================================================
+>>> File: src/ast_equals.cpp
+====================================================================
+
+#include "../include/ast_equals.hpp"
+
+namespace ast {
+
+
+void IsEqual::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+    std::string a_reg = context.regAlloc();
+    equality_expression_->EmitRISC(stream, context, a_reg);
+    stream << "mv " << destReg << ", " << a_reg << std::endl;
+    std::string b_reg = context.regAlloc();
+    relational_expression_->EmitRISC(stream, context, b_reg);
+    stream << "sub " << destReg << ", " << b_reg << ", " << destReg << std::endl;
+    stream << "seqz " << destReg << ", " << destReg << std::endl;
+}
+void IsEqual::Print(std::ostream &stream) const {
+    (void)stream;
+}
+
+TypeSpecifier IsEqual::getType(Context &context) const {
+    (void)context;
+    return TypeSpecifier::INT; }
+
+
+void IsNotEqual::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+    std::string a_reg = context.regAlloc();
+    equality_expression_->EmitRISC(stream, context, a_reg);
+    stream << "mv " << destReg << ", " << a_reg << std::endl;
+    std::string b_reg = context.regAlloc();
+    relational_expression_->EmitRISC(stream, context, b_reg);
+    stream << "sub " << destReg << ", " << b_reg << ", " << destReg << std::endl;
+    stream << "snez " << destReg << ", " << destReg << std::endl;
+}
+
+void IsNotEqual::Print(std::ostream &stream) const {
+    (void)stream;
+}
+
+TypeSpecifier IsNotEqual::getType(Context &context) const {
+    (void)context;
+    return TypeSpecifier::INT; }
+
+
+
+}
+
+
+====================================================================
+>>> File: src/ast_function_call.cpp
+====================================================================
+
+#include "../include/ast_function_call.hpp"
+#include <string>
+
+namespace ast {
+
+
+void FunctionCall::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const {
+    const Identifier* identifier = dynamic_cast<const Identifier*>(func_name_);
+    std::string func_name = identifier->getId();
+    std::cout << func_name << std::endl;
+    if (parameters_names_ != nullptr){
+        // (void)destReg;
+        std::string storeReg;
+        if (parameters_names_ != nullptr){
+            int regCount = 0;
+            for (auto param : parameters_names_->getNode()){
+                if(regCount > 7){
+                    storeReg = context.regAlloc();
+                    param->EmitRISC(stream, context, storeReg);
+                    stream << "sb " << storeReg << ", " << "(s0)" << std::endl;
+                    context.regDalloc(storeReg);
+                } else {
+                    std::string destinationRegister = "a" + std::to_string(regCount);
+                    param->EmitRISC(stream, context, destinationRegister);
+                }
+                regCount++;
+            }
+        }
+        else{
+            this->EmitRISC(stream, context, destReg);
+        }
+        if(destReg != ""){
+            stream << "mv " << destReg << ", a0" << std::endl;
+        }
+        else{
+            std::string tempReg = context.regAlloc();
+            stream << "mv " << tempReg << ", a0" << std::endl;
+            context.regDalloc(tempReg);
+        }
+    }
+    // context.useRegister(stream);
+    stream << "call " << func_name << std::endl;
+    
+
+
+}
+
+
+
+void FunctionCall::Print(std::ostream &stream) const{
+    func_name_->Print(stream);
+    stream << "(";
+    if (parameters_names_ != nullptr){
+        for (auto param : parameters_names_->getNode()){   // i think this is correct not sure I added stuff to node.hpp
+            param->Print(stream);
+            stream << ", ";
+        }
+    }
+}
+
+
+}
+
+
+====================================================================
+>>> File: src/ast_function_definition.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_function_definition.hpp"
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_direct_declarator.hpp"
+#include <cstddef>
+
+namespace ast {
+
+
+void FunctionDefinition::EmitRISC(std::ostream& stream, Context& context, std::string &) const
+{
+    auto directDecl = dynamic_cast<const DirectDeclarator*>(declarator_);
+    auto identifier = directDecl->getIdentifier();
+    context.makeFuncReturnType(declarator_->getId(), declaration_specifiers_);
+    std::string temp;
+
+    stream << ".text" << std::endl;
+    stream << ".globl ";
+    identifier->EmitRISC(stream, context, temp);
+    stream << std::endl;
+
+    identifier->EmitRISC(stream, context, temp);
+    stream << ":" << std::endl;
+
+    // context.initalizeStack(stream);
+    
+    declarator_->EmitRISC(stream, context, temp);
+    stream << std::endl;
+
+    if (compound_statement_ != nullptr)
+    {
+        std::string temp;
+        compound_statement_->EmitRISC(stream, context, temp);
+    }
+
+    // context.restoreRegs(stream);
+
+}
+
+void FunctionDefinition::Print(std::ostream& stream) const
+{
+    stream << declaration_specifiers_ << " ";
+
+    declarator_->Print(stream);
+    stream << "( " << std::endl;
+    if (declarator_list_ != nullptr){
+        declarator_list_->Print(stream);
+    }
+    stream << ") {";
+    if (compound_statement_ != nullptr)
+    {
+        compound_statement_->Print(stream);
+    }
+    stream << "}" << std::endl;
+}
+
+}
+
+
+====================================================================
+>>> File: src/ast_identifier.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_identifier.hpp"
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_type_specifier.hpp"
+
+
+
+namespace ast {
+
+
+void Identifier::EmitRISC(std::ostream& stream, Context &context, std::string &destReg) const {
+    // EntitySpecifier ent_type = context.getEntity(identifier_);
+
+    if (context.parameters.find(identifier_) != context.parameters.end()){          // for parameters
+        Parameters param = context.getParam(identifier_);
+        // stream << "DEBUG: var.type = " << static_cast<int>(param.type) << "\n";
+        // if (param.memLocation != ""){
+        if (param.PointerOrNot){
+            std::string offset = context.getMemLocation(identifier_);
+            stream << "lw " << destReg << ", " << offset << "(s0)\n";
+            // context.regDalloc(destReg);
+        }
+        else {
+            switch (param.type) {
+                case TypeSpecifier::INT: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "lw " << destReg << ", " << offset << "(s0)\n";
+                    // context.regDalloc(destReg);
+                    break;
+                }
+                case TypeSpecifier::FLOAT: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "flw " << destReg << ", " << offset << "(s0)\n";
+                    // context.floatRegDalloc(destReg);
+                    break;
+                }
+                case TypeSpecifier::CHAR: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "lb " << destReg << ", " << offset << "(s0)\n";
+                    // context.regDalloc(destReg);
+                    break;
+                }
+                case TypeSpecifier::BOOL: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "lb " << destReg << ", " << offset << "(s0)\n";
+                    // context.regDalloc(destReg);
+                    break;
+                }
+                case TypeSpecifier::DOUBLE: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "fld " << destReg << ", " << offset << "(sp)\n";
+                    // context.floatRegDalloc(destReg);
+                    break;
+                }
+                default:
+                    stream << "";
+            }
+        }
+    }
+    else if (context.LocalVariables.find(identifier_) != context.LocalVariables.end()){      // for local vars
+        Variables var = context.getVariable(identifier_);
+        // stream << "DEBUG: identifier_ = " << identifier_ << "\n";
+        // stream << "DEBUG: ent_type = " << static_cast<int>(ent_type) << "\n";
+        // stream << "DEBUG: var.type = " << static_cast<int>(var.type) << "\n";
+        // stream << "DEBUG: var.offset = " << var.memLocation << "\n";
+        // if (var.memLocation != ""){
+        if (var.PointerOrNot){
+                std::string offset = context.getMemLocation(identifier_);
+                stream << "lw " << destReg << ", " << offset << "(s0)\n";
+                // context.regDalloc(destReg);
+            }
+        else {
+            switch (var.type) {
+                case TypeSpecifier::INT: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "lw " << destReg << ", " << offset << "(s0)\n";
+                    // context.regDalloc(destReg);
+                    break;
+                }
+
+                case TypeSpecifier::FLOAT: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "flw " << destReg << ", " << offset << "(s0)\n";
+                    // context.floatRegDalloc(destReg);
+                    break;
+                }
+
+                case TypeSpecifier::CHAR: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "lb " << destReg << ", " << offset << "(s0)\n";
+                    // context.regDalloc(destReg);
+                    break;
+                }
+
+                case TypeSpecifier::BOOL: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "lb " << destReg << ", " << offset << "(s0)\n";
+                    // context.regDalloc(destReg);
+                    break;
+                }
+
+                case TypeSpecifier::DOUBLE: {
+                    std::string offset = context.getMemLocation(identifier_);
+                    stream << "fld " << destReg << ", " << offset << "(sp)\n";
+                    // context.floatRegDalloc(destReg);
+                    break;
+                }
+                default:
+                stream << "";                 //lw " << destReg << ", " << context.getMemLocation(identifier_) << "(sp)" << std::endl;
+            }
+        }
+    }
+    else {
+        try {
+            int enum_val = context.lookupEnumValue(identifier_);
+            stream << "li " << destReg << ", " << enum_val << "\n";
+            context.regDalloc(destReg);
+            return;
+        } catch (const std::runtime_error&) {
+        }
+        // stream << context.printEnumNames();
+        // if (!context.isEnumVal(identifier_)){
+        // if (identifier_ != "vv"){
+            stream << identifier_;
+        // }
+        // }
+    }
+}
+
+
+// EntitySpecifier Identifier::getEntity() const
+// {
+//     return EntitySpecifier::VARIABLE;
+// }
+
+
+void Identifier::Print(std::ostream& stream) const
+{
+    stream << identifier_;
+
+};
+
+}
+
+
+====================================================================
+>>> File: src/ast_if_else.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_if_else.hpp"
+
+
+void ast::IfElse::EmitRISC(std::ostream &stream, Context &context, std::string&) const
+{
+    std::string destinationRegister = context.regAlloc();
+    std::string elseLabel = context.labelAlloc("else");
+    std::string endLabel = context.labelAlloc("endif");
+
+    condition_->EmitRISC(stream, context, destinationRegister);
+    // stream << "mv " << destinationRegister << ", a0" << std::endl;
+    stream << "beqz " << destinationRegister << ", " << elseLabel << std::endl;      // beqz x1, endif (branch equals zero)
+
+    if_statement_->EmitRISC(stream, context, destinationRegister);
+    stream << "j " << endLabel << std::endl;
+
+    stream << elseLabel << ":" << std::endl;
+    else_statement_->EmitRISC(stream, context,destinationRegister);
+
+    stream << endLabel << ":" << std::endl;
+
+    context.regDalloc(destinationRegister);
+}
+
+void ast::IfElse::Print(std::ostream &stream) const
+{
+    stream << "if (";                                // if (x == 5) return x else return x + y
+    condition_->Print(stream);
+    stream << ") {";
+    if_statement_->Print(stream);
+    stream << "} else {";
+    else_statement_->Print(stream);
+    stream << "}" << std::endl;
+}
+
+
+====================================================================
+>>> File: src/ast_if_statement.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_if_statement.hpp"
+
+void ast::IfStatement::EmitRISC(std::ostream &stream, Context &context, std::string &) const
+{
+    std::string destinationRegister = context.regAlloc();
+    std::string endLabel = context.labelAlloc("endif");
+
+    condition_->EmitRISC(stream, context, destinationRegister);
+    // stream << "mv " << destinationRegister << ", a0" << std::endl;
+    stream << "beqz " << destinationRegister << ", " << endLabel << std::endl;      // beqz x1, endif
+
+    statement_->EmitRISC(stream, context, destinationRegister);
+
+    stream << endLabel << ":" << std::endl;
+
+    context.regDalloc(destinationRegister);
+}
+
+void ast::IfStatement::Print(std::ostream &stream) const {
+    stream << "if (";                            // if (x == 5) return x
+    condition_->Print(stream);
+    stream << ") ";
+    statement_->Print(stream);
+    stream << std::endl;
+}
+
+
+
+
+====================================================================
+>>> File: src/ast_init_declare.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_init_declare.hpp"
+#include <cstddef>
+#include <string>
+
+namespace ast {
+
+void InitDeclare::EmitRISC(std::ostream &stream, Context &context, std::string &) const
+{
+    Variables var = context.getVariable(declarator_->getId());
+    std::string offset = context.getMemLocation(declarator_->getId());
+    std::string temp;
+    if (initializer_) {
+        if (var.PointerOrNot){
+            std::string reg = context.regAlloc();
+            initializer_->EmitRISC(stream, context, reg);
+            stream << "sw " << reg << ", " << offset << "(s0)" << std::endl;
+            context.regDalloc(reg);
+        }
+        else if (var.type == TypeSpecifier::INT)
+            {
+                std::string reg = context.regAlloc();
+                initializer_->EmitRISC(stream, context, reg);
+                stream << "sw " << reg << ", " << offset << "(s0)" << std::endl;
+                context.regDalloc(reg);
+            }
+        else if (var.type == TypeSpecifier::FLOAT)
+            {
+                std::string regf = context.floatRegAlloc();
+                initializer_->EmitRISC(stream, context, regf);
+                stream << "fsw " << regf << ", " << offset << "(s0)" << std::endl;
+                context.floatRegDalloc(regf);
+            }
+        else if (var.type == TypeSpecifier::DOUBLE)
+            {
+                std::string regf = context.floatRegAlloc();
+                initializer_->EmitRISC(stream, context, regf);
+                stream << "fsd " << regf << ", " << offset << "(sp)" << std::endl;
+                context.floatRegDalloc(regf);
+            }
+
+        else {
+                std::string temp;
+                initializer_->EmitRISC(stream, context, temp);
+            }
+    }
+
+}
+
+void InitDeclareList::EmitRISC(std::ostream &stream, Context &context, std::string &) const
+{
+    for (auto node : in_->getNode()){
+        std::string temp;
+        if(in_ == nullptr){
+            continue;
+        }
+        // (void)node;
+        node->EmitRISC(stream, context, temp);
+    }
+
+}
+
+EntitySpecifier InitDeclare::getEntity() const { return declarator_->getEntity(); }
+
+std::string InitDeclare::getId() const { return declarator_->getId(); }
+
+void InitDeclare::Print(std::ostream &stream) const {
+    (void)stream;
+}
+
+void InitDeclareList::Print(std::ostream &stream) const {
+    (void)stream;
+}
+
+}
+
+
+
+
+
+====================================================================
+>>> File: src/ast_jump_statement.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_jump_statement.hpp"
+
+namespace ast {
+
+void ReturnStatement::EmitRISC(std::ostream& stream, Context& context, std::string &) const
+{
+    TypeSpecifier mvType = context.getLastAddedReturnType();
+
+    if (expression_ != nullptr)
+    {
+        if (mvType == TypeSpecifier::INT || mvType == TypeSpecifier::UNSIGNED){
+            std::string temp = context.regAlloc();
+            expression_->EmitRISC(stream, context, temp);
+            stream << "mv a0, " << temp << std::endl;
+            context.endStack(stream);
+            context.regDalloc(temp);
+            // stream << "#ONCE" << std::endl;
+        }
+        else if (mvType  == TypeSpecifier::FLOAT){
+            std::string temp = context.floatRegAlloc();
+            expression_->EmitRISC(stream, context, temp);
+            stream << "fmv.s fa0, " << temp << std::endl;
+            context.endStack(stream);
+            context.floatRegDalloc(temp);
+            // stream << "#TWICE" << std::endl;
+        }
+        else if (mvType  == TypeSpecifier::DOUBLE){
+            std::string temp = context.floatRegAlloc();
+            expression_->EmitRISC(stream, context, temp);
+            stream << "fmv.d fa0, " << temp << std::endl;
+            context.endStack(stream);
+            context.floatRegDalloc(temp);
+            // stream << "#THRICE" << std::endl;
+        }
+    }
+    stream << "jr ra" << std::endl;
+}
+
+void ReturnStatement::Print(std::ostream& stream) const
+{
+    stream << "return";
+    if (expression_ != nullptr)
+    {
+        stream << " ";
+        expression_->Print(stream);
+    }
+    stream << ";" << std::endl;
+}
+
+}
+
+
+====================================================================
+>>> File: src/ast_literal.cpp
+====================================================================
+
+#include "../include/ast_literal.hpp"
+
+
+namespace ast {
+
+
+
+    void StringLiteral::EmitRISC(std::ostream &stream, Context &context, std::string &) const
+    {
+        std::string pairing = context.labelAlloc("string");
+        context.newStringList(pairing, string_literal_);
+        std::string tmp = context.regAlloc();
+
+        stream << "lui " << "a" << ", %hi(" << pairing << ")" << std::endl;
+        stream << "addi " << tmp << ", " << tmp <<", %lo(" << pairing << ")" << std::endl;
+    }
+
+    TypeSpecifier StringLiteral::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::STRING;
+    }
+
+    EntitySpecifier StringLiteral::getEntity() const
+    {
+        return EntitySpecifier::STRING_DEFINITION;
+    }
+
+
+    std::string StringLiteral::getId() const
+    {
+        return string_literal_;
+    }
+
+    void StringLiteral::Print(std::ostream &stream) const
+    {
+        stream << string_literal_;
+    }
+}
+
+
+====================================================================
+>>> File: src/ast_node.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_node.hpp"
+
+namespace ast {
+
+void NodeList::PushBack(NodePtr item)
+{
+    nodes_.push_back(std::move(item));
+}
+
+void NodeList::EmitRISC(std::ostream& stream, Context& context, std::string &destReg) const
+{
+    for (const auto& node : nodes_)
+    {
+        if (node == nullptr)
+        {
+            continue;
+        }
+        // std::string temp;
+        node->EmitRISC(stream, context, destReg);
+    }
+}
+
+void NodeList::Print(std::ostream& stream) const
+{
+    for (const auto& node : nodes_)
+    {
+        if (node == nullptr)
+        {
+            continue;
+        }
+        node->Print(stream);
+    }
+}
+
+const std::vector<NodePtr>& NodeList::getNode() const {
+    return nodes_;
+}
+
+}
+
+
+====================================================================
+>>> File: src/ast_parameter_declare.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_parameter_declare.hpp"
+#include <cstddef>
+#include <string>
+
+namespace ast {
+
+void ParameterDeclare::EmitRISC(std::ostream &stream, Context &context, std::string&) const
+{
+    // Check
+    std::string temp;                   // Not it
+    stream << declaration_specifiers_;
+    if (declarator_ != nullptr)
+    {
+        declarator_->EmitRISC(stream, context, temp);
+    }
+}
+
+void ParameterDeclare::Print(std::ostream &stream) const
+{
+    stream << declaration_specifiers_ << " ";
+    stream << declarator_->getId();
+    stream << ", ";
+
+}
+
+
+void ParameterList::EmitRISC(std::ostream& stream, Context& context, std::string &) const
+{
+    // (void)context;
+    int in = 0;
+    int fl = 0;
+    for (auto param : getNode()){
+        if (param == nullptr){
+            continue;
+        }
+
+        // stream << "DEBUG: ent.type = " << static_cast<int>(param->getEntity()) << "\n";
+
+        if (param->getEntity() == EntitySpecifier::POINTER) {
+            std::string offset = context.takeMemory(TYPE_SIZE_INT);
+            context.makeParam(param->getId(), param->getType(context), offset, true);
+            stream << "sw a" << in << ", " << offset << "(s0)" << std::endl;
+            in++;
+        }
+        else{
+            if (param->getType(context) == TypeSpecifier::INT){
+                std::string offset = context.takeMemory(TYPE_SIZE_INT);
+                context.makeParam(param->getId(), param->getType(context), offset, false);
+                stream << "sw a" << in << ", " << offset << "(s0)" << std::endl;
+                in++;
+            }
+            else if (param->getType(context) == TypeSpecifier::FLOAT) {
+                std::string offset = context.takeMemory(TYPE_SIZE_FLOAT);
+                context.makeParam(param->getId(), param->getType(context), offset, false);
+
+                stream << "fsw fa" << fl << ", " << offset << "(s0)" << std::endl;
+                fl++;
+            }
+            else if (param->getType(context) == TypeSpecifier::DOUBLE) {
+                std::string offset = context.takeMemory(TYPE_SIZE_DOUBLE);
+                context.makeParam(param->getId(), param->getType(context), offset, false);
+                stream << "fsd fa" << fl << ", " << offset << "(sp)" << std::endl;
+                fl++;
+            }
+        }
+
+    }
+}
+
+EntitySpecifier ParameterDeclare::getEntity() const
+{
+    return declarator_->getEntity();
+}
+
+
+void ParameterList::Print(std::ostream &stream) const
+{
+    (void)stream;
+}
+
+}
+
+
+====================================================================
+>>> File: src/ast_pointers.cpp
+====================================================================
+
+#include "../include/ast_pointers.hpp"
+
+
+namespace ast {
+
+    void Pointers::EmitRISC(std::ostream& stream, Context& context, std::string &destReg) const
+    {
+        (void) stream;
+        (void) context;
+        (void) destReg;
+    }
+
+    void Pointers::Print(std::ostream& stream) const
+    {
+        stream << "My name is";
+    }
+
+    void PointerDeclare::EmitRISC(std::ostream& stream, Context& context, std::string &destReg) const
+    {
+        // std::string tmp;
+        // stream << "DEBUG: " << identifier_->getId();
+        // context.allocateStackSpace(identifier_->getId(), TypeSpecifier::INVALID, true);
+        // context.makePointer(identifier_->getId());
+        // std::cout << "MADE A POINTER";
+        identifier_->EmitRISC(stream, context, destReg);    // might be destReg
+        (void) destReg;
+    }
+
+    void PointerDeclare::Print(std::ostream& stream) const
+    {
+        std::cout << "printing pointer declare" << std::endl;
+        pointer_->Print(stream);
+        identifier_->Print(stream);
+    }
+
+    std::string PointerDeclare::getId() const {
+        return identifier_->getId();
+    }
+
+
+}
+
+
+
+
+
+====================================================================
+>>> File: src/ast_postfix.cpp
+====================================================================
+
+#include "../include/ast_postfix.hpp"
+
+namespace ast {
+
+   void Postfixer::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+   {
+        std::string tempReg = context.regAlloc();
+        primary_expression_->EmitRISC(stream, context, tempReg);
+
+        stream << "mv " << destReg << ", " << tempReg << std::endl;
+
+        if(op_ == "++"){
+            stream << "addi " << tempReg << ", " << tempReg << ", 1" << std::endl;
+        }
+        else if(op_ == "--"){
+            stream << "addi " << tempReg << ", " << tempReg << ", -1" << std::endl;
+        }
+        stream << "sw " << tempReg << ", " << context.getMemLocation(primary_expression_->getId()) << "(s0)" << std::endl;
+        context.regDalloc(tempReg);
+   }
+
+   void Postfixer::Print(std::ostream &stream) const
+   {
+        stream << "(";
+        primary_expression_->Print(stream);
+        stream << op_;
+        stream << ")";
+   }
+
+//    TypeSpecifier Postfixer::getType(Context &context) const
+//    {
+//         return TypeSpecifier::INT;
+//    }
+}
+
+
+====================================================================
+>>> File: src/ast_prefix.cpp
+====================================================================
+
+#include "../include/ast_prefix.hpp"
+
+namespace ast {
+
+   void Prefixer::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+   {
+        std::string tempReg = context.regAlloc();
+        primary_expression_->EmitRISC(stream, context, tempReg);
+
+        if(op_ == "++"){
+            stream << "addi " << tempReg << ", " << tempReg << ", 1" << std::endl;
+        }
+        else if(op_ == "--"){
+            stream << "addi " << tempReg << ", " << tempReg << ", -1" << std::endl;
+        }
+        stream << "sw " << tempReg << ", " << context.getMemLocation(primary_expression_->getId()) << "(s0)" << std::endl;
+
+        stream << "mv " << destReg << ", " << tempReg << std::endl;
+
+        context.regDalloc(tempReg);
+   }
+
+   void Prefixer::Print(std::ostream &stream) const
+   {
+        stream << "(";
+        primary_expression_->Print(stream);
+        stream << op_;
+        stream << ")";
+   }
+
+//    TypeSpecifier Prefixer::getType(Context &context) const
+//    {
+//         return TypeSpecifier::INT;
+//    }
+}
+
+
+====================================================================
+>>> File: src/ast_shift.cpp
+====================================================================
+
+#include "../include/ast_shift.hpp"
+
+namespace ast {
+
+    void LeftShift::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        a->EmitRISC(stream, context, destReg);
+
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+
+        stream << "sll " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+
+        context.regDalloc(b_reg);
+
+    }
+
+    void LeftShift::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " << ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier LeftShift::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+
+    void RightShift::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        a->EmitRISC(stream, context, destReg);
+
+        std::string b_reg = context.regAlloc();
+        b->EmitRISC(stream, context, b_reg);
+
+        if (getType(context) == TypeSpecifier::INT) {
+            stream << "sra " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        } else {
+            stream << "srl " << destReg << ", " << destReg << ", " << b_reg << std::endl;
+        }
+
+        context.regDalloc(b_reg);
+
+    }
+
+    void RightShift::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " >> ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier RightShift::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+}
+
+
+
+====================================================================
+>>> File: src/ast_sizeof.cpp
+====================================================================
+
+#include "../include/ast_sizeof.hpp"
+
+namespace ast {
+
+    void SizeOf::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        if (isType_) {
+
+            if (type_ == TypeSpecifier::INT) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_INT << std::endl;
+            }
+            else if (type_ == TypeSpecifier::FLOAT) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_FLOAT << std::endl;
+            }
+            else if (type_ == TypeSpecifier::DOUBLE) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_DOUBLE << std::endl;
+            }
+            else if (type_ == TypeSpecifier::CHAR) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_CHAR << std::endl;
+            }
+            else {
+                stream << "li " << destReg << ", " << TYPE_SIZE_INT << std::endl;
+            }
+        }
+        else {
+
+            TypeSpecifier exprType = context.getVarType(expression_->getId());
+
+            if (context.getIsPointer(expression_->getId()) && expression_->getEntity() != EntitySpecifier::POINTER_DEREFERENCE) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_INT << std::endl;
+            }
+            else if (exprType == TypeSpecifier::INT) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_INT << std::endl;
+            }
+            else if (exprType == TypeSpecifier::FLOAT) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_FLOAT << std::endl;
+            }
+            else if (exprType == TypeSpecifier::DOUBLE) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_DOUBLE << std::endl;
+            }
+            else if (exprType == TypeSpecifier::CHAR) {
+                stream << "li " << destReg << ", " << TYPE_SIZE_CHAR << std::endl;
+            }
+            else {
+                stream << "li " << destReg << ", " << TYPE_SIZE_INT << std::endl;
+            }
+        }
+    }
+
+    void SizeOf::Print(std::ostream &stream) const
+    {
+        stream << "sizeof(";
+        if (isType_) {
+            stream << "TYPE";  // Debugging
+        }
+        else {
+            expression_->Print(stream);
+        }
+        stream << ")";
+    }
+
+    EntitySpecifier SizeOf::getEntity() const { return EntitySpecifier::SIZE_OF; }
+
+    TypeSpecifier SizeOf::getType(Context &context) const {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+}
+
+
+====================================================================
+>>> File: src/ast_switch_statement.cpp
+====================================================================
+
+#include "../include/ast_switch_statement.hpp"
+
+
+
+====================================================================
+>>> File: src/ast_thans.cpp
+====================================================================
+
+#include "../include/ast_thans.hpp"
+
+namespace ast {
+
+
+    // Greater than
+
+    void GreaterThan::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        std::string b_reg = context.regAlloc();
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        b->EmitRISC(stream, context, b_reg);
+
+        stream << "sgt " << destReg << ", " << a_reg << ", " << b_reg << std::endl;
+        // stream << "andi " << destReg << ", " << destReg << ", 0xff" << std::endl;
+
+        context.regDalloc(b_reg);
+
+    }
+
+    void GreaterThan::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " > ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier GreaterThan::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+    // Greater than or equal
+    void GreaterThanEqual::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        std::string b_reg = context.regAlloc();
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        b->EmitRISC(stream, context, b_reg);
+
+        stream << "slt " << destReg << ", " << a_reg << ", " << b_reg << std::endl;
+        stream << "xori " << destReg << ", " << destReg << ", 1" << std::endl;
+        // stream << "andi " << destReg << ", " << destReg << ", 0xff" << std::endl;
+
+        context.regDalloc(b_reg);
+    }
+
+    void GreaterThanEqual::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " >= ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier GreaterThanEqual::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+    // Less than
+    void LessThan::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+        std::string a_reg = context.regAlloc();
+        std::string b_reg = context.regAlloc();               // ONE OF THESE SHOULD BE EMITING DESTREG IM PRETTY SURE BECAUSE FOR_ZERO_V1 X7 is loaded into and then not used
+        a->EmitRISC(stream, context, a_reg);
+        b->EmitRISC(stream, context, b_reg);
+        stream << "slt " << destReg << ", " << a_reg << ", " << b_reg << std::endl;
+        // stream << "andi " << destReg << ", " << destReg << ", 0xff" << std::endl;
+        context.regDalloc(b_reg);
+    }
+
+    void LessThan::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " < ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier LessThan::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+    // Less than equal
+    void LessThanEqual::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+
+    {
+        std::string b_reg = context.regAlloc();
+        std::string a_reg = context.regAlloc();
+        a->EmitRISC(stream, context, a_reg);
+        b->EmitRISC(stream, context, b_reg);
+
+        stream << "sgt " << destReg << ", " << a_reg << ", " << b_reg << std::endl;
+        stream << "xori " << destReg << ", " << destReg << ", 1" << std::endl;
+        // stream << "andi " << destReg << ", " << destReg << ", 0xff" << std::endl;
+
+        context.regDalloc(b_reg);
+    }
+
+    void LessThanEqual::Print(std::ostream &stream) const
+    {
+        stream << "(";
+        a->Print(stream);
+        stream << " <= ";
+        b->Print(stream);
+        stream << ")";
+    }
+
+    TypeSpecifier LessThanEqual::getType(Context &context) const
+    {
+        (void)context;
+        return TypeSpecifier::INT;
+    }
+
+
+}
+
+
+====================================================================
+>>> File: src/ast_type_def_declarator.cpp
+====================================================================
+
+// #include "../include/ast_type_def_declarator.hpp"
+
+
+// namespace ast {
+//     void TypedefDeclare::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+//     {
+//         (void)stream;
+//         (void)context;
+//         (void)destReg;
+//     }
+
+//     void TypedefDeclare::Print(std::ostream &stream) const
+//     {
+//         identifier_->Print(stream);
+//         type_specifier_->Print(stream);
+//     }
+
+//     // std::string TypedefDeclare::getId() const
+//     // {
+//     //     return declaration_specifier_->getId();
+//     // }
+
+// }
+
+
+====================================================================
+>>> File: src/ast_type_def.cpp
+====================================================================
+
+// #include "../include/ast_type_def.hpp"
+
+// namespace ast {
+
+//     void Typedef::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+//     {
+//         (void)stream;
+//         (void)context;
+//         (void)destReg;
+//     }
+
+//     void Typedef::Print(std::ostream &stream) const
+//     {
+//         stream << identifier_;
+//     }
+
+//     std::string Typedef::getId() const
+//     {
+//         return identifier_;
+//     }
+
+
+// }
+
+
+====================================================================
+>>> File: src/ast_unary.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_unary.hpp"
+
+namespace ast {
+
+    void Unary::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+    {
+
+        // & address-of operator
+        // stream << "DEBUG: var.type = " << static_cast<int>(type) << "\n";
+
+        if(UnaryOp_ == "&"){
+            std::string memLocation = context.getMemLocation(cast_expression_->getId());
+            stream << "addi " << destReg << ", s0, " << memLocation << std::endl;
+        }
+
+        // * pointer dereference
+
+        if(UnaryOp_ == "*"){
+            std::cout << "Goes to Unary * " << std::endl;
+            std::string memLocation = context.getMemLocation(cast_expression_->getId());
+            stream << "lw " << destReg << ", " << memLocation << "(s0)" << std::endl;
+            stream << "lw " << destReg << ", 0(" << destReg << ")" << std::endl;
+
+        }
+
+        // - negation
+
+        else if(UnaryOp_ == "-") {
+            std::string a_reg = context.regAlloc();
+            cast_expression_->EmitRISC(stream, context, a_reg);
+            stream << "neg " << destReg << ", " << a_reg << std::endl;
+            context.regDalloc(a_reg);
+        }
+
+        // ! logical not
+
+        else if(UnaryOp_ == "!") {
+            std::string a_reg = context.regAlloc();
+            cast_expression_->EmitRISC(stream, context, a_reg);
+            stream << "seqz " << destReg << ", " << a_reg << std::endl;
+            context.regDalloc(a_reg);
+        }
+
+        // ~ bitwise not
+
+        else if(UnaryOp_ == "~") {
+            std::string a_reg = context.regAlloc();
+            cast_expression_->EmitRISC(stream, context, a_reg);
+            stream << "not " << destReg << ", " << a_reg << std::endl;
+            context.regDalloc(a_reg);
+        }
+
+        // ++x
+
+        else if(UnaryOp_ == "++"){
+            std::string a_reg = context.regAlloc();
+            std::string memLocation = context.getMemLocation(cast_expression_->getId());
+            stream << "lw " << a_reg << ", " << memLocation << "(s0)" << std::endl;
+            stream << "addi " << a_reg << ", " << a_reg << ", 1" << std::endl;
+            stream << "sw " << a_reg << ", " << memLocation << "(s0)" << std::endl;
+            stream << "mv " << destReg << ", " << a_reg << std::endl;
+            context.regDalloc(a_reg);
+        }
+
+        // --x
+
+        else if(UnaryOp_ == "--"){
+            std::string a_reg = context.regAlloc();
+            std::string memLocation = context.getMemLocation(cast_expression_->getId());
+            stream << "lw " << a_reg << ", " << memLocation << "(s0)" << std::endl;
+            stream << "addi " << a_reg << ", " << a_reg << ", -1" << std::endl;
+            stream << "sw " << a_reg << ", " << memLocation << "(s0)" << std::endl;
+            stream << "mv " << destReg << ", " << a_reg << std::endl;
+            context.regDalloc(a_reg);
+        }
+
+        //need to check how to implement x++ and x--
+
+    }
+
+    EntitySpecifier Unary::getEntity() const
+    {
+        if (UnaryOp_ == "*")
+        {
+            return EntitySpecifier::POINTER_DEREFERENCE;
+        }
+        else if (UnaryOp_ == "&")
+        {
+            return EntitySpecifier::POINTER_ADDRESS;
+        }
+        else
+        {
+            return EntitySpecifier::UNARY;
+        }
+    }
+
+    std::string Unary::getId() const
+    {
+        return cast_expression_->getId();
+    }
+
+    void Unary::Print(std::ostream &stream) const
+    {
+        stream << UnaryOp_;
+        cast_expression_->Print(stream);
+    }
+
+    TypeSpecifier Unary::getType(Context &context) const
+    {
+        return cast_expression_->getType(context);
+    }
+}
+
+
+====================================================================
+>>> File: src/ast_variable.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_variable.hpp"
+#include <ostream>
+#include <type_traits>
+
+
+void ast::VariableDeclare::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const {
+    (void)stream;
+
+
+        if (!var_name_) {
+            // Possibly print a debug message or just return
+            stream << "# [Info] No var_name in VariableDeclare" << std::endl;
+            return;
+        }
+        context.allocateStackSpace(var_name_->getId(), var_type_, false);
+        var_name_->EmitRISC(stream, context, destReg);
+    // }
+
+}
+
+void ast::VariableDeclare::Print(std::ostream &stream) const {
+    stream << "int ";
+    if (var_name_ != nullptr) {
+        stream << var_name_->getId();
+    } else {
+        stream << "<null identifier>";
+    }
+    stream << ";" << std::endl;
+}
+
+
+ast::EntitySpecifier ast::VariableDeclare::getEntity() const
+{
+    return ast::EntitySpecifier::VARIABLE;
+}
+
+
+// ./scripts/test.py -m             multicore run
+
+
+====================================================================
+>>> File: src/ast_while.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_while.hpp"
+
+
+void ast::WhileStatement::EmitRISC(std::ostream &stream, Context &context, std::string &) const
+{
+    std::string destinationRegister = context.regAlloc();
+    std::string conditionLabel = context.labelAlloc("condition");
+    std::string statementLabel = context.labelAlloc("statement");
+    context.createLoop(conditionLabel, statementLabel);
+
+    stream << "j " << conditionLabel << std::endl;          // j L_3
+
+    stream << statementLabel << ":" << std::endl;           // L_2:   (statement label)
+    std::string temp;
+    if (statement_ != nullptr){
+        statement_->EmitRISC(stream, context, destinationRegister);             // emit statement
+    }
+    stream << conditionLabel << ":" << std::endl;                                    // L_3:  (condition label)
+    if (condition_ != nullptr){
+        condition_->EmitRISC(stream, context, destinationRegister);        // emit condition
+    }
+    stream << "bne " << destinationRegister << ", zero, " << statementLabel << std::endl; // bnez, x1, L_2    " << destinationRegister
+
+    context.exitLoop();
+    context.regDalloc(destinationRegister);
+}
+
+void ast::ForStatement::EmitRISC(std::ostream &stream, Context &context, std::string &destReg) const
+{
+
+    expression_statement_->EmitRISC(stream, context, destReg);
+
+    // std::string destReg = context.regAlloc();
+
+    std::string startLabel = context.labelAlloc("for_");
+    std::string conditionLabel = context.labelAlloc("condition_");
+    std::string updateLabel = context.labelAlloc("update_");
+    std::string endLabel = context.labelAlloc("endfor_");
+    context.createForLoop(startLabel, endLabel, updateLabel);
+
+    stream << "j " << conditionLabel << std::endl;
+
+    stream << startLabel << ":" << std::endl;
+    if (statement_) statement_->EmitRISC(stream, context, destReg);
+
+    stream << updateLabel << ":" << std::endl;
+    if (expression_ != nullptr)
+    {
+        expression_->EmitRISC(stream, context, destReg);
+    }
+
+    // Emit the end label
+
+    stream << conditionLabel << ":" << std::endl;
+
+    // Emit the condition
+    if (loop_condition_->getEntity() == EntitySpecifier::SEMICOLON)
+    {
+        stream << "addi " << destReg << ", zero, 1" << std::endl;
+    }
+    else
+    {
+        loop_condition_->EmitRISC(stream, context, destReg);
+    }
+    // Emit the branch
+    stream << "bnez " << destReg << ", " << startLabel << std::endl;
+
+    //  Free the register
+    stream << endLabel << ":" << std::endl;
+    context.exitLoop();
+    context.regDalloc(destReg);
+}
+
+
+
+
+
+void ast::WhileStatement::Print(std::ostream &stream) const
+{
+    stream << "while (";
+    if (condition_ != nullptr){
+        condition_->Print(stream);
+    }
+    stream << ") {";
+    if (statement_ != nullptr){
+    statement_->Print(stream);
+    }
+    stream << "}" << std::endl;
+}
+
+void ast::ForStatement::Print(std::ostream &stream) const
+{
+    stream << "for ( ";
+    stream << ") {";
+    if (statement_ != nullptr){
+    statement_->Print(stream);
+    }
+    stream << "}" << std::endl;
+}
+
+
+
+
+
+
+
+====================================================================
+>>> File: src/cli.cpp
+====================================================================
+
+#include <cli.hpp>
+
+CommandLineArguments ParseCommandLineArgs(int argc, char **argv)
+{
+    std::string input = "";
+
+    if ((argc <= 1) || (argv[argc - 1] == NULL) || (argv[argc - 1][0] == '-'))
+    {
+        std::cerr << "No command line arguments were provided" << std::endl;
+        exit(1);
+    }
+    else
+    {
+        input = argv[argc - 1];
+    }
+
+    // Prevent opterr messages from being outputted.
+    opterr = 0;
+
+    // ./bin/c_compiler -S [source-file.c] -o [dest-file.s]
+    CommandLineArguments cli_args;
+    int opt;
+    while ((opt = getopt(argc, argv, "S:o:")) != -1)
+    {
+        switch (opt)
+        {
+        case 'S':
+            cli_args.compile_source_path = std::string(optarg);
+            break;
+        case 'o':
+            cli_args.compile_output_path = std::string(optarg);
+            break;
+        case '?':
+            if (optopt == 'S' || optopt == 'o')
+            {
+                fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+            }
+            else if (isprint(optopt))
+            {
+                fprintf(stderr, "Unknown option `-%c'.\n", optopt);
+            }
+            else
+            {
+                fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
+            }
+            fprintf(stderr, "Exiting due to failure to parse CLI args\n");
+            exit(2);
+        }
+    }
+
+    if (cli_args.compile_source_path.length() == 0)
+    {
+        std::cerr << "The source path -S argument was not set." << std::endl;
+        exit(2);
+    }
+
+    if (cli_args.compile_output_path.length() == 0)
+    {
+        std::cerr << "The output path -o argument was not set." << std::endl;
+        exit(2);
+    }
+
+    return cli_args;
+}
+
+
+====================================================================
+>>> File: src/compiler.cpp
+====================================================================
+
+#include <fstream>
+#include <iostream>
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/cli.hpp"
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast.hpp"
+
+using ast::NodePtr;
+
+// Wrapper for ParseAST defined in YACC
+NodePtr Parse(const std::string& compile_source_path);
+
+// Output the pretty print version of what was parsed to the .printed output file.
+void PrettyPrint(const NodePtr& root, const std::string& compile_output_path);
+
+// Compile from the root of the AST and output this to the compiledOutputPath file.
+void Compile(const NodePtr& root, const std::string& compile_output_path);
+
+int main(int argc, char **argv)
+{
+    // Parse CLI arguments to fetch the source file to compile and the path to output to.
+    // This retrives [source-file.c] and [dest-file.s], when the compiler is invoked as follows:
+    // ./bin/c_compiler -S [source-file.c] -o [dest-file.s]
+    const auto [compile_source_path, compile_output_path] = ParseCommandLineArgs(argc, argv);
+
+    // Parse input and generate AST.
+    auto ast_root = Parse(compile_source_path);
+
+    // Check something was actually returned by parseAST().
+    if (ast_root == nullptr)
+    {
+        std::cerr << "The root of the AST is a null pointer. ";
+        std::cerr << "Likely the root was never initialised correctly during parsing." << std::endl;
+        return 3;
+    }
+
+    // Print AST in a human-readable way. It's not assessed, but exists for your convenience.
+    PrettyPrint(ast_root, compile_output_path);
+
+    // Compile to RISC-V assembly, the main goal of this project.
+    Compile(ast_root, compile_output_path);
+}
+
+NodePtr Parse(const std::string& compile_source_path)
+{
+    std::cout << "Parsing " << compile_source_path << "..." << std::endl;
+
+    NodePtr root = ParseAST(compile_source_path);
+
+    std::cout << "AST parsing complete" << std::endl;
+
+    return root;
+}
+
+void PrettyPrint(const NodePtr& root, const std::string& compile_output_path)
+{
+    auto output_path = compile_output_path + ".printed";
+
+    std::cout << "Printing parsed AST..." << std::endl;
+
+    std::ofstream output(output_path, std::ios::trunc);
+    root->Print(output);
+
+    std::cout << "Printed parsed AST to: " << output_path << std::endl;
+}
+
+void Compile(const NodePtr& root, const std::string& compile_output_path)
+{
+    // Create a Context. This can be used to pass around information about
+    // what's currently being compiled (e.g. function scope and variable names).
+    ast::Context ctx;
+
+    std::cout << "Compiling parsed AST..." << std::endl;
+    std::string temp;
+    std::ofstream output(compile_output_path, std::ios::trunc);
+    root->EmitRISC(output, ctx, temp);
+
+    std::cout << "Compiled to: " << compile_output_path << std::endl;
+}
+
+
+====================================================================
+>>> File: src/data_constructs/ast_enum_spec.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/data_constructs/ast_enum_spec.hpp"
+
+
+void ast::enum_spec::EmitRISC(std::ostream &stream, Context &context) const {
+    context.createEnum(enum_name_);
+    expr_->EmitRISC(stream, context);
+    context.resEnum();
+}
+
+void ast::enum_spec::Print(std::ostream &stream) const {
+    stream << "enum " << enum_name_ << " {" << std::endl;
+    if (expr_ != nullptr){
+        expr_->Print(stream);
+    }
+    stream << "}";
+}
+
+
+
+
+====================================================================
+>>> File: src/data_constructs/ast_enums.cpp
+====================================================================
+
+// #include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/data_constructs/ast_enums.hpp"
+
+// void ast::Enums::EmitRISC(std::ostream &stream, Context &context) const {
+
+//     if(expr_ == nullptr){
+//         context.enumAddValue(enum_name_, context.setEnumValue());
+//     } else {
+//         context.enumAddValue(enum_name_, expr_->getValue());
+//     }
+
+// }
+
+// void ast::Enums::Print(std::ostream &stream) const {
+//     stream << enum_name_;
+//     expr_->Print(stream);
+//     stream << std::endl;
+// }
+
+// // ast::TypeSpecifier ast::Enums::getType() const {
+// //     return TypeSpecifier::INT;
+// // }
+
+
+
+====================================================================
+>>> File: src/data_constructs/ast_type_def.cpp
+====================================================================
+
+// #include "../include/ast_type_def.hpp"
+// #include <ostream>
+
+// namespace ast {
+
+// TypeSpecifier TypeDef::getType(Context &context) const
+// {
+//     (void)context;
+//     if (type_ == "int")
+//     {
+//         return TypeSpecifier::INT;
+//     }
+//     else if (type_ == "float")
+//     {
+//         return TypeSpecifier::FLOAT;
+//     }
+//     else if (type_ == "double")
+//     {
+//         return TypeSpecifier::DOUBLE;
+//     }
+//     else if (type_ == "char")
+//     {
+//         return TypeSpecifier::CHAR;
+//     }
+//     else if (type_ == "unsigned")
+//     {
+//         return TypeSpecifier::UNSIGNED;
+//     }
+//     else if (type_ == "void")
+//     {
+//         return TypeSpecifier::VOID;
+//     }
+//     return TypeSpecifier::INVALID;
+// }
+
+//     void TypeDef::EmitRISC(std::ostream &stream, Context &context, std::string&) const {
+//         (void)stream;
+//         (void)context;
+//     }
+//     void TypeDef::Print(std::ostream &stream) const {
+//         (void)stream;
+//     }
+
+
+// }
+
+
+
+====================================================================
+>>> File: src/functions/ast_function_def.cpp
+====================================================================
+
+// #include "/workspaces/aurelersek/Desktop/langproc-cw-main/include/functions/ast_function_def.hpp"
+// #include <ostream>
+
+
+// void ast::FunctionDef::EmitRISC(std::ostream &stream, Context &context) const {
+
+//     stream << ".text" << std::endl;
+//     stream << ".globl f" << func_->getId() << std::endl;
+//     std::string offset = context.takeMemory(TYPE_SIZE_RETURN_ADDRESS);
+//     context.makeFuncReturnType(func_->getId(), specifiers_);        // necessary or can change???
+
+//     func_->EmitRISC(stream, context);
+
+//     stream << "sw ra, " << offset << "(s0)" << std::endl;           // use s0 or sp?   (sp is stack pointer)
+
+//     if (statement_ != nullptr){
+//         statement_->EmitRISC(stream, context);
+//     }
+
+//     stream << context.funcReturn() << ";" << std::endl;
+
+//     stream << "lw ra, " << offset << "(s0)" << std::endl;
+//     stream << "ret" << std::endl;
+
+//     context.deallocateMemory(TYPE_SIZE_RETURN_ADDRESS);     // is this necessary or should be done in leavefunc?
+
+//     context.leaveFunc(stream);
+// }
+
+// void ast::FunctionDef::Print(std::ostream& stream) const
+// {
+//     stream << specifiers_ << " ";           // type: int etc.
+
+//     func_->Print(stream);                // function_name(int x, ...) part
+//     stream << "() {" << std::endl;          // I dont think this is right, only right for func with no arguments
+//     if (statement_ != nullptr)
+//     {
+//         statement_->Print(stream);       //inside of {  }
+//     }
+//     stream << "}" << std::endl;
+// }
+
+
+
+====================================================================
+>>> File: src/functions/ast_imm_assign.cpp
+====================================================================
+
+#include "../include/ast_imm_assign.hpp"
+
+
+namespace ast{
+
+
+    void ImmAssign::EmitRISC(std::ostream &stream, Context &context, std::string&) const {
+        // stream << "#HELLLO";
+        std::string temp;
+        if (context.parameters.find(declarator_->getId()) != context.parameters.end()){          // for parameters
+            Parameters param = context.getParam(declarator_->getId());
+            if (param.type == TypeSpecifier::INT)
+            {
+                temp = context.regAlloc();
+                std::string offset = context.getMemLocation(declarator_->getId());
+                initializer_->EmitRISC( stream, context, temp);
+                stream << "sw " << temp << ", " << offset << "(sp)" << std::endl;
+                context.regDalloc(temp);
+            }
+        }
+
+        if (context.LocalVariables.find(declarator_->getId()) != context.LocalVariables.end()){          // for vars
+            Variables var = context.getVariable(declarator_->getId());
+            if (var.type == TypeSpecifier::INT)
+            {
+                temp = context.regAlloc();
+                std::string offset = context.getMemLocation(declarator_->getId());
+                initializer_->EmitRISC( stream, context, temp);
+                stream << "sw " << temp << ", " << offset << "(sp)" << std::endl;
+                context.regDalloc(temp);
+            }
+        }
+    }
+
+    void ImmAssign::Print(std::ostream& stream) const {
+        (void)stream;
+    }
+
+}
+
+
+====================================================================
+>>> File: src/functions/ast_parameter_list.cpp
+====================================================================
+
+// #include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/ast_parameter_list.hpp"
+// #include "stdlib.h"
+
+// namespace ast {
+
+//     void ParameterList::EmitRISC(std::ostream &stream, Context &context, std::string &) const {
+//         int i = 0;
+//         std::string offset;
+//         for (auto param : param_list_.getNode()) {
+//             if ((i <= 7) & (param != nullptr)){
+//                 offset = context.takeMemory(TYPE_SIZE_INT);
+//                 stream << "sw a" << i << ", " << offset << "(sp)" << std::endl;
+//                 i++;
+//             }
+//         }
+//     }
+
+//     void ParameterList::Print(std::ostream &stream) const {
+//         stream << "hellow world";
+//     }
+
+// }
+
+
+====================================================================
+>>> File: src/logic_statements/ast_assignment.cpp
+====================================================================
+
+// #include "/workspaces/aurelersek/Desktop/langproc-cw-main/include/ast_assignment.hpp"
+
+
+// void ast::Assignment::EmitRISC(std::ostream &stream, Context &context) const {
+//     std::string rhsReg = context.regAlloc();
+//     assignment_expression_->EmitRISC(stream, context);
+//     stream << "mv " << rhsReg << ", a0" << std::endl;
+
+//     std::string lhsAddr = context.getMemLocation(unary_expression_->getId());
+
+//     stream << "sw " << rhsReg << ", " << lhsAddr << "(sp)" << std::endl;
+
+//     context.regDalloc(rhsReg);
+// }
+
+// void ast::Assignment::Print(std::ostream &stream) const
+// {
+//     unary_expression_->Print(stream);
+//     stream << " " << assignment_operator_ << " ";
+//     assignment_expression_->Print(stream);
+//     stream << ";" << std::endl;
+// }
+
+
+
+
+// /*
+//     stream << var_name_ << std::endl;
+//     std::string destinationRegister = context.regAlloc();
+//     TypeSpecifier varType = context.getVarType(var_name_);
+
+//     if (varType == TypeSpecifier::INT || (varType == TypeSpecifier::INT && context.getIsPointer(var_name_))){
+//         stream << "lw " << destinationRegister << ", " << context.getMemLocation(var_name_) << "(sp)" << std::endl;
+//     }
+//     else if (varType == TypeSpecifier::FLOAT){
+//         stream << "flw " << destinationRegister << ", " << context.getMemLocation(var_name_) << "(sp)" << std::endl;
+//     }
+//     else if (varType == TypeSpecifier::CHAR){
+//         stream << "lbu " << destinationRegister << ", " << context.getMemLocation(var_name_) << "(sp)" << std::endl;
+//     }
+//     else {
+//         stream << "lw " << destinationRegister << ", " << context.getMemLocation(var_name_) << "(sp)" << std::endl;
+//     }
+
+// */
+
+
+====================================================================
+>>> File: src/logic_statements/ast_do_while.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/logic_statements/ast_do_while.hpp"
+
+
+void ast::DoWhile::EmitRISC(std::ostream &stream, Context &context) const
+{
+    std::string destinationRegister = context.regAlloc();
+    std::string conditionLabel = context.labelAlloc("while");
+    std::string statementLabel = context.labelAlloc("end");
+    context.createLoop(statementLabel, conditionLabel);
+    // stream << "j " << conditionLabel << std::endl;          // j L_3
+
+    stream << statementLabel << ":" << std::endl;           // L_2:   (statement label)
+
+    statement_->EmitRISC(stream, context);             // emit statement
+
+    stream << conditionLabel << ":" << std::endl;                                    // L_3:  (condition label)
+
+    condition_->EmitRISC(stream, context, destinationRegister);        // emit condition
+
+    stream << "bnez " << destinationRegister << ", " << conditionLabel << std::endl; // bnez, x1, L_2
+
+    context.exitLoop();
+    context.regDalloc(destinationRegister);
+}
+
+
+void ast::DoWhile::Print(std::ostream &stream) const {
+    stream << "do {" << std::endl;
+    statement_->Print(stream);
+    stream << "} (" << std::endl;
+    condition_->Print(stream);
+    stream << ")" << std::endl;
+}
+
+
+
+
+====================================================================
+>>> File: src/logic_statements/ast_empty_statement.cpp
+====================================================================
+
+#include "../include/ast_empty_statement.hpp"
+#include <iterator>
+
+void ast::emptyStatement::EmitRISC(std::ostream &stream, Context &context) const {
+}
+
+void ast::emptyStatement::Print(std::ostream &stream) const {
+    stream << ";";
+}
+
+
+
+====================================================================
+>>> File: src/logic_statements/ast_switch.cpp
+====================================================================
+
+#include "/workspaces/langproc-2024-cw-Compile_me_maybe/include/logic_statements/ast_switch.hpp"
+            // SIMILAR STRUCTURE TO IF STATEMENTS
+
+void ast::Switch::EmitRISC(std::ostream &stream, Context &context) const {
+
+    context.createSwitch();
+
+    std::string destReg = context.regAlloc();
+
+    expr_->EmitRISC(stream, context, destReg);
+
+    for(auto &cases : list_->getNode()){
+        cases->EmitRISC(stream, context, destReg);
+    }
+    stream << "j " << context.defaultLabel() << std::endl;          // whats the point default label is never set?
+
+    stream << context.switchLabel() << ":" << std::endl;
+
+    context.regDalloc(destReg);
+    context.exit_s();
+}
+
+void ast::Switch::Print(std::ostream &stream) const {
+    stream << "switch (";
+    expr_->Print(stream);
+    stream << ") ";
+    list_->Print(stream);
+    stream << std::endl;
+}
+
+
+
+
+
+
+====================================================================
+>>> File: src/logic_statements/ast_variable_declare.cpp
+====================================================================
+
+// #include "/workspaces/aurelersek/Desktop/langproc-cw-main/include/ast_variable_declare.hpp"
+// #include <stdexcept>
+
+// void ast::VariableDeclare::EmitRISC(std::ostream &stream, Context &context, std::string &) const {
+
+//     if (var_type_ == TypeSpecifier::INT) {
+//         context.allocateStackSpace(var_name_->getId(), var_type_, false);
+//         var_name_->EmitRISC(stream, context);
+//     }
+//     else if (var_type_ == TypeSpecifier::FLOAT) {
+//         context.allocateStackSpace(var_name_->getId(), var_type_, false);
+//         var_name_->EmitRISC(stream, context);
+//     }
+//     else if (var_type_ == TypeSpecifier::CHAR) { // Differentiating between `char` and `string` is context-dependent
+//         context.allocateStackSpace(var_name_->getId(), var_type_, false);
+//         var_name_->EmitRISC(stream, context);
+//     }
+//     else {
+//         throw std::runtime_error("Invalid type in VariableDeclare");
+//     }
+// }
+
+
+// //
+
+
+// void ast::VariableDeclare::Print(std::ostream &stream) const {
+//     // stream << var_type_ << " ";
+//     // for (const auto& var : var_name_->getNode()) {
+//     //     std::string var_name = var->getId();
+//     //     stream << var_name << ", ";         // what to do about last variable maybe doesnt matter
+//     // }
+//     stream << ";" << std::endl;
+// };
+
+
+

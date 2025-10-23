@@ -1,0 +1,9 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/default/test_ADD0.c...
+# DEBUG: primary_expression is an IDENTIFIER: a
+# DEBUG: primary_expression is an IDENTIFIER: b
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/default/test_ADD0/test_ADD0.s.printed
+Compiling parsed AST...
+0Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/default/test_ADD0/test_ADD0.s

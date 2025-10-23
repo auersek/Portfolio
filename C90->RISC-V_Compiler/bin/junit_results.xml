@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Integration test">
+<testcase name="compiler_tests/array/index_expression.c">
+<error type="error" message="&#9;&gt; Failed to compile testcase: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.s.printed">
+	&gt; Failed to compile testcase: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/array/index_expression/index_expression.s.printed</error>
+</testcase>
+<testcase name="compiler_tests/array/declare_global.c">
+</testcase>
+<testcase name="compiler_tests/array/declare_local.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/for_zero_v1.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/for_multiple.c">
+</testcase>
+<testcase name="compiler_tests/array/index_constant.c">
+</testcase>
+<testcase name="compiler_tests/_example/example.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/for_zero_v2.c">
+</testcase>
+<testcase name="compiler_tests/array/index_variable.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/for_one.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/if_true.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/while_multiple.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/sequence.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/if_false.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/if_else_true.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/if_else_false.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/while_once.c">
+</testcase>
+<testcase name="compiler_tests/control_flow/while_zero.c">
+</testcase>
+<testcase name="compiler_tests/float/pow.c">
+<error type="error" message="&#9;&gt; Failed to assemble: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.assembler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.assembler.stdout.log">
+	&gt; Failed to assemble: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.assembler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.assembler.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/float/add_double.c">
+</testcase>
+<testcase name="compiler_tests/default/test_ADD1.c">
+</testcase>
+<testcase name="compiler_tests/default/test_LOCAL.c">
+</testcase>
+<testcase name="compiler_tests/default/test_CALL.c">
+</testcase>
+<testcase name="compiler_tests/default/test_ADD0.c">
+</testcase>
+<testcase name="compiler_tests/float/add_mul.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_constant_external.c">
+</testcase>
+<testcase name="compiler_tests/float/mul_add.c">
+</testcase>
+<testcase name="compiler_tests/float/mul_double.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_five_args_external.c">
+</testcase>
+<testcase name="compiler_tests/float/mul.c">
+</testcase>
+<testcase name="compiler_tests/float/add.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_constant_internal.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_five_args_internal.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_identity_external.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_identity_internal.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_two_args_external.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_mutual_recursive.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_mutual_recursive/call_mutual_recursive.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/functions/call_recursive_internal.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/functions/call_recursive_internal/call_recursive_internal.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/integer/add.c">
+</testcase>
+<testcase name="compiler_tests/integer/div.c">
+</testcase>
+<testcase name="compiler_tests/integer/bitwise_and.c">
+</testcase>
+<testcase name="compiler_tests/functions/call_two_args_internal.c">
+</testcase>
+<testcase name="compiler_tests/integer/bitwise_xor.c">
+</testcase>
+<testcase name="compiler_tests/integer/less_than.c">
+</testcase>
+<testcase name="compiler_tests/integer/equal.c">
+</testcase>
+<testcase name="compiler_tests/integer/bitwise_or.c">
+</testcase>
+<testcase name="compiler_tests/integer/logical_and.c">
+</testcase>
+<testcase name="compiler_tests/integer/less_than_equal.c">
+</testcase>
+<testcase name="compiler_tests/misc/typedef1.c">
+<error type="error" message="&#9;&gt; Failed to compile testcase: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.s.printed">
+	&gt; Failed to compile testcase: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef1/typedef1.s.printed</error>
+</testcase>
+<testcase name="compiler_tests/integer/logical_or.c">
+</testcase>
+<testcase name="compiler_tests/misc/typedef2.c">
+<error type="error" message="&#9;&gt; Failed to compile testcase: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.s.printed">
+	&gt; Failed to compile testcase: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/typedef2/typedef2.s.printed</error>
+</testcase>
+<testcase name="compiler_tests/integer/mul.c">
+</testcase>
+<testcase name="compiler_tests/integer/sub.c">
+</testcase>
+<testcase name="compiler_tests/misc/enum1.c">
+<error type="error" message="&#9;&gt; Failed to assemble: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.assembler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.assembler.stdout.log">
+	&gt; Failed to assemble: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.assembler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum1/enum1.assembler.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/local_var/identity.c">
+</testcase>
+<testcase name="compiler_tests/local_var/dual_var.c">
+</testcase>
+<testcase name="compiler_tests/local_var/expression_initialiser.c">
+</testcase>
+<testcase name="compiler_tests/misc/switch1.c">
+<error type="error" message="&#9;&gt; Failed to assemble: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.assembler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.assembler.stdout.log">
+	&gt; Failed to assemble: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.assembler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch1/switch1.assembler.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/local_var/single_var.c">
+</testcase>
+<testcase name="compiler_tests/local_var/constant_initialiser.c">
+</testcase>
+<testcase name="compiler_tests/misc/enum2.c">
+<error type="error" message="&#9;&gt; Failed to assemble: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.assembler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.assembler.stdout.log">
+	&gt; Failed to assemble: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.assembler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/enum2/enum2.assembler.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/local_var/scoped_var.c">
+</testcase>
+<testcase name="compiler_tests/programs/sqrt.c">
+<error type="error" message="&#9;&gt; Failed to compile testcase: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.s.printed">
+	&gt; Failed to compile testcase: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/sqrt/sqrt.s.printed</error>
+</testcase>
+<testcase name="compiler_tests/pointer/addressof.c">
+</testcase>
+<testcase name="compiler_tests/pointer/arithmetic.c">
+</testcase>
+<testcase name="compiler_tests/pointer/assign.c">
+</testcase>
+<testcase name="compiler_tests/pointer/dereference.c">
+</testcase>
+<testcase name="compiler_tests/pointer/index.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/pointer/index/index.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/strings/literal.c">
+<error type="error" message="&#9;&gt; Failed to link driver: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.linker.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.linker.stdout.log">
+	&gt; Failed to link driver: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.linker.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/literal/literal.linker.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/strings/escaped.c">
+<error type="error" message="&#9;&gt; Failed to link driver: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.linker.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.linker.stdout.log">
+	&gt; Failed to link driver: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.linker.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/escaped/escaped.linker.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/strings/puts.c">
+<error type="error" message="&#9;&gt; Failed to link driver: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.linker.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.linker.stdout.log">
+	&gt; Failed to link driver: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.linker.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.linker.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/strings/search.c">
+<error type="error" message="&#9;&gt; Failed to link driver: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.linker.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.linker.stdout.log">
+	&gt; Failed to link driver: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.linker.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/search/search.linker.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/programs/fibonacci.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/fibonacci/fibonacci.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/strings/chliteral.c">
+</testcase>
+<testcase name="compiler_tests/programs/multiply.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/misc/switch2.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/misc/switch2/switch2.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/struct/sizeof.c">
+</testcase>
+<testcase name="compiler_tests/struct/struct_inst.c">
+</testcase>
+<testcase name="compiler_tests/struct/struct_member_get.c">
+</testcase>
+<testcase name="compiler_tests/struct/struct_member_set.c">
+</testcase>
+<testcase name="compiler_tests/types/sizeof_int_type.c">
+</testcase>
+<testcase name="compiler_tests/types/sizeof_char_inst.c">
+</testcase>
+<testcase name="compiler_tests/types/sizeof_char_type.c">
+</testcase>
+<testcase name="compiler_tests/struct/struct_two_members.c">
+<error type="error" message="&#9;&gt; Failed to simulate: &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.compiler.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.compiler.stdout.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.s &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.s.printed &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.simulation.stderr.log &#10;&#9; /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.simulation.stdout.log">
+	&gt; Failed to simulate: 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.compiler.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.compiler.stdout.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.s 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.s.printed 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.simulation.stderr.log 
+	 /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/struct/struct_two_members/struct_two_members.simulation.stdout.log</error>
+</testcase>
+<testcase name="compiler_tests/types/sizeof_int_inst.c">
+</testcase>
+<testcase name="compiler_tests/types/unsigned.c">
+</testcase>
+</testsuite>

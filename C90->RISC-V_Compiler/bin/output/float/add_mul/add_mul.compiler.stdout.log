@@ -1,0 +1,10 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/float/add_mul.c...
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an IDENTIFIER: y
+# DEBUG: primary_expression is an IDENTIFIER: z
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/add_mul/add_mul.s.printed
+Compiling parsed AST...
+0Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/add_mul/add_mul.s

@@ -1,0 +1,3 @@
+int fakeputs;
+void g( 
+) {fakeputs("wibble", }

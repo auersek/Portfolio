@@ -1,0 +1,9 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/integer/equal.c...
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an IDENTIFIER: y
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/integer/equal/equal.s.printed
+Compiling parsed AST...
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/integer/equal/equal.s

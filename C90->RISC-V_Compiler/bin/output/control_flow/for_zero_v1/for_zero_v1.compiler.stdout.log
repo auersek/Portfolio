@@ -1,0 +1,28 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/control_flow/for_zero_v1.c...
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an INT_CONSTANT: 1
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an INT_CONSTANT: 19937
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/control_flow/for_zero_v1/for_zero_v1.s.printed
+Compiling parsed AST...
+FindMem in Assign x
+ParameterList check
+Array Index: 
+0FindMem in Assign x
+ParameterList check
+Array Index: 
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/control_flow/for_zero_v1/for_zero_v1.s

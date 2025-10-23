@@ -1,0 +1,32 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/programs/multiply.c...
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: multiply
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: y
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an INT_CONSTANT: 0
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: acc
+# DEBUG: primary_expression is an IDENTIFIER: y
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: primary_expression is an IDENTIFIER: acc
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.s.printed
+Compiling parsed AST...
+multiply
+FindMem in Assign acc
+ParameterList check
+Array Index: 
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/programs/multiply/multiply.s

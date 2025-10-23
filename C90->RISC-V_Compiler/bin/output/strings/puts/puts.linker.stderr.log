@@ -1,0 +1,4 @@
+/opt/riscv/bin/../lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/strings/puts/puts.o: in function `g':
+(.text+0x10): undefined reference to `string_0'
+/opt/riscv/bin/../lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld: (.text+0x14): undefined reference to `string_0'
+collect2: error: ld returned 1 exit status

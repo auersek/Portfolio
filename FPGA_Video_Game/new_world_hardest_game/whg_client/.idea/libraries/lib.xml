@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/TinySound/lib/jorbis-0.0.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/TinySound/lib/vorbisspi1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/TinySound/lib/tritonus_share.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

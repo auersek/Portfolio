@@ -1,0 +1,16 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/integer/bitwise_or.c...
+# DEBUG: primary_expression is an IDENTIFIER: z
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: primary_expression is an IDENTIFIER: y
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression contains an assignment
+# DEBUG: primary_expression is an IDENTIFIER: z
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/integer/bitwise_or/bitwise_or.s.printed
+Compiling parsed AST...
+FindMem in Assign z
+ParameterList check
+Array Index: 
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/integer/bitwise_or/bitwise_or.s

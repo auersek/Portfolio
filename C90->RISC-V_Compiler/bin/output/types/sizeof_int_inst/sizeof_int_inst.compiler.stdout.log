@@ -1,0 +1,9 @@
+Parsing /workspaces/langproc-2024-cw-Compile_me_maybe/compiler_tests/types/sizeof_int_inst.c...
+# DEBUG: primary_expression is an IDENTIFIER: x
+# DEBUG: assignment_expression is a conditional_expression
+# DEBUG: assignment_expression is a conditional_expression
+AST parsing complete
+Printing parsed AST...
+Printed parsed AST to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/types/sizeof_int_inst/sizeof_int_inst.s.printed
+Compiling parsed AST...
+Compiled to: /workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/types/sizeof_int_inst/sizeof_int_inst.s

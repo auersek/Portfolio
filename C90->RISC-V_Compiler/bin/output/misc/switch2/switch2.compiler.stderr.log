@@ -1,0 +1,52 @@
+=================================================================
+==2390==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x603000000000 at pc 0x55845f419270 bp 0x7ffe47d87320 sp 0x7ffe47d87310
+READ of size 8 at 0x603000000000 thread T0
+    #0 0x55845f41926f in ast::NodeList::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const src/ast_node.cpp:19
+    #1 0x55845f3e3576 in ast::CompStatement::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const src/ast_comp_statement.cpp:15
+    #2 0x55845f402810 in ast::FunctionDefinition::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const src/ast_function_definition.cpp:31
+    #3 0x55845f4192be in ast::NodeList::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const src/ast_node.cpp:19
+    #4 0x55845f43709e in Compile(ast::Node* const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:75
+    #5 0x55845f436366 in main src/compiler.cpp:40
+    #6 0x7f743c229d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #7 0x7f743c229e3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #8 0x55845f2cd694 in _start (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x2e3694)
+
+0x603000000000 is located 16 bytes to the left of 24-byte region [0x603000000010,0x603000000028)
+allocated by thread T0 here:
+    #0 0x55845f35d3e7 in malloc (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x3733e7)
+    #1 0x7f743c29015a in _dlerror_run dlfcn/dlerror.c:168
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow src/ast_node.cpp:19 in ast::NodeList::EmitRISC(std::ostream&, ast::Context&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) const
+Shadow bytes around the buggy address:
+  0x0c067fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c067fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c067fff8000:[fa]fa 00 00 00 fa fa fa fd fd fd fd fa fa fd fd
+  0x0c067fff8010: fd fd fa fa 00 00 00 fa fa fa 00 00 00 00 fa fa
+  0x0c067fff8020: 00 00 00 fa fa fa fd fd fd fd fa fa 00 00 00 fa
+  0x0c067fff8030: fa fa 00 00 00 fa fa fa 00 00 00 00 fa fa fd fd
+  0x0c067fff8040: fd fd fa fa fd fd fd fd fa fa 00 00 00 00 fa fa
+  0x0c067fff8050: fd fd fd fd fa fa fd fd fd fd fa fa fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==2390==ABORTING

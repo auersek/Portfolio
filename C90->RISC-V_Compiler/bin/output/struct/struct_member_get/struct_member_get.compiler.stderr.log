@@ -1,0 +1,22 @@
+
+=================================================================
+==2590==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 96 byte(s) in 3 object(s) allocated from:
+    #0 0x5650356e7d47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x5650357dcae4 in yylex() src/lexer.flex:60
+    #2 0x5650357c9e10 in yyparse() build/parser.tab.cpp:1987
+    #3 0x5650357d5822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #4 0x5650357bf6c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #5 0x5650357bf1b1 in main src/compiler.cpp:26
+    #6 0x7f21cd229d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Direct leak of 40 byte(s) in 1 object(s) allocated from:
+    #0 0x5650356e7d47 in operator new(unsigned long) (/workspaces/langproc-2024-cw-Compile_me_maybe/bin/c_compiler+0x374d47)
+    #1 0x5650357d0abc in yyparse() src/parser.y:365
+    #2 0x5650357d5822 in ParseAST(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) src/parser.y:515
+    #3 0x5650357bf6c8 in Parse(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) src/compiler.cpp:47
+    #4 0x5650357bf1b1 in main src/compiler.cpp:26
+    #5 0x7f21cd229d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+SUMMARY: AddressSanitizer: 136 byte(s) leaked in 4 allocation(s).

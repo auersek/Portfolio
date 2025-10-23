@@ -1,0 +1,8 @@
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s: Assembler messages:
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:11: Error: illegal operands `flw f4,1'
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:23: Error: illegal operands `fmv.s a2,f5'
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:25: Error: illegal operands `fmul.s a2,a2,f5'
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:26: Error: illegal operands `mv f4,a2'
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:27: Error: illegal operands `sw f4,-24(s0)'
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:31: Error: illegal operands `slt f4,a2,a3'
+/workspaces/langproc-2024-cw-Compile_me_maybe/bin/output/float/pow/pow.s:32: Error: illegal operands `bne f4,zero,statement_1'

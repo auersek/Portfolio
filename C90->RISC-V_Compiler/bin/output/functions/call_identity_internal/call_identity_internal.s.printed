@@ -1,0 +1,6 @@
+int g( 
+) {return x;
+}
+int f( 
+) {return g(10, ;
+}

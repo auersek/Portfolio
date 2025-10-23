@@ -1,0 +1,7 @@
+int bsqrt( 
+) {while (((lo + 1) < hi)) {SKIBIDI BOP
+}
+if (((lo * lo) < val)) {return hi;
+} else {return lo;
+}
+}

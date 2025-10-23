@@ -1,0 +1,4 @@
+int f( 
+) {p = (p + 1);
+return *p;
+}
