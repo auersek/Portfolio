@@ -33,6 +33,14 @@ The CPU was validated by running a wide range of RISC-V assembly programs to ens
 
 ## PROJECT 3: FPGA Video Game (Java, Verilog, FPGA, AWS):
 
+This project involved designing an end-to-end motion-controlled multiplayer game system titled Don’t Tilt, integrating FPGA sensor acquisition, real-time filtering, client-server networking, and a Java-based game front end. The system captures tilt data from the DE10-Lite accelerometer, processes it through the Nios II soft-core processor, and streams it to a Java game, allowing players to control movement by physically tilting the board. A Python client manages local communication and relays data to a custom EC2 server, which distributes player states and maintains a persistent leaderboard via DynamoDB.
+
+Accelerometer data was acquired via SPI, with an interrupt-driven design to minimize jitter and improve responsiveness. To suppress noise without sacrificing latency, raw samples were filtered using a 49-tap FIR filter, initially implemented in software and later migrated to a custom fixed-point hardware FIR module on the FPGA. This hardware filtering significantly reduced processing delay and allowed smooth real-time motion while maintaining stabilised sensor output. A clock-division module regulated the sampling rate to ~3.2 kHz to ensure consistent filtering and prevent overruns in the downstream pipeline.
+
+For networking, the system uses a hybrid TCP + UDP architecture: TCP for reliable events such as combat setup and level completion, and UDP for high-frequency position updates. To further improve gameplay smoothness, each UDP packet included timestamps and velocity vectors, enabling out-of-order packet rejection and client-side motion prediction for remote player rendering. This reduced visual stutter when network latency introduced gaps between updates.
+
+Multiplayer synchronization was managed through the EC2 game server, supporting parallel game sessions and maintaining fairness through level-completion gating, timeout handling, and scalable combat ID routing. A DynamoDB database stored user highscores, updated at the end of each game via TCP API calls. The final result was a fully integrated motion-based multiplayer game system running across FPGA hardware, Python middleware, cloud networking, and a Java client, optimized for responsiveness, real-time feedback, and low-latency user interaction.
+
 
 ## PROJECT 4: C Compiler (done in C++):
 
