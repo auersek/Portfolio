@@ -43,8 +43,11 @@ For networking, the system uses a hybrid TCP + UDP architecture: TCP for reliabl
 
 Multiplayer synchronization was managed through the EC2 game server, supporting parallel game sessions and maintaining fairness through level-completion gating, timeout handling, and scalable combat ID routing. A DynamoDB database stored user highscores, updated at the end of each game via TCP API calls. The final result was a fully integrated motion-based multiplayer game system running across FPGA hardware, Python middleware, cloud networking, and a Java client, optimized for responsiveness, real-time feedback, and low-latency user interaction.
 
+## PROJECT 4: Balance Robot (C++, Python, Javascript, HTML/CSS):
 
-## PROJECT 4: C Compiler (done in C++):
+
+
+## PROJECT 5: C Compiler (C++):
 
 This project aims to build a C compiler which translates C90 code into RISC-V assembly instructions. 
 
