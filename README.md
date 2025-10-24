@@ -39,7 +39,7 @@ Accelerometer data was acquired via SPI, with an interrupt-driven design to mini
 
 For networking, the system uses a hybrid TCP + UDP architecture: TCP for reliable events such as combat setup and level completion, and UDP for high-frequency position updates. To further improve gameplay smoothness, each UDP packet included timestamps and velocity vectors, enabling out-of-order packet rejection and client-side motion prediction for remote player rendering. This reduced visual stutter when network latency introduced gaps between updates.
 
-<img src="https://github.com/auersek/Portfolio/blob/main/Images/Screen%20Shot%202025-03-28%20at%206.12.54%20PM.jpg" width="850" height="550" alt="Pipeline 5 stages passed">
+<img src="https://github.com/auersek/Portfolio/blob/main/Images/InfoprocArchitectureDiagram.jpg" width="850" height="550" alt="Communication architecture">
 
 Multiplayer synchronization was managed through the EC2 game server, supporting parallel game sessions and maintaining fairness through level-completion gating, timeout handling, and scalable combat ID routing. A DynamoDB database stored user highscores, updated at the end of each game via TCP API calls. The final result was a fully integrated motion-based multiplayer game system running across FPGA hardware, Python middleware, cloud networking, and a Java client, optimized for responsiveness, real-time feedback, and low-latency user interaction.
 
