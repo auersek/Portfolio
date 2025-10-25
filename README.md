@@ -45,7 +45,7 @@ Multiplayer synchronization was managed through the EC2 game server, supporting 
 
 ## PROJECT 4: Balance Robot (C++, Python, Javascript, HTML/CSS):
 
-The Balance Robot is a self-balancing, two-wheeled autonomous platform capable of mapping its surroundings, planning routes, and navigating indoor maze environments without human intervention. Its stability comes from a layered control system built around a cascaded PID architecture. The inner tilt loop—driven by a complementary-filtered IMU that fuses accelerometer and gyroscope data—keeps the robot upright in real time, while an outer velocity loop regulates forward motion. A parallel turn controller then adjusts the relative wheel speeds, enabling responsive steering and precise in-place rotation.
+The Balance Robot is a self-balancing, two-wheeled autonomous rover capable of mapping its surroundings, planning routes, and navigating indoor maze environments without human intervention. Its stability comes from a layered control system built around a cascaded PID architecture. The inner tilt loop is driven by a complementary filtered IMU that fuses accelerometer and gyroscope data that keeps the robot upright in real time, while an outer velocity loop regulates forward motion. A parallel turn controller then adjusts the relative wheel speeds, enabling responsive steering and precise in place rotation.
 
 This control structure allows the robot to remain stable even when subjected to external disturbances, sudden turns, or uneven traction. By separating balance, velocity, and heading into dedicated PID loops, the robot can maintain equilibrium while simultaneously executing smooth trajectory changes, giving it the agility required for tight maze navigation and reliable autonomous driving.
 
