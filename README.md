@@ -47,11 +47,15 @@ Multiplayer synchronization was managed through the EC2 game server, supporting 
 
 The Balance Robot is a self-balancing, two-wheeled autonomous rover capable of mapping its surroundings, planning routes, and navigating indoor maze environments without human intervention. Its stability comes from a layered control system built around a cascaded PID architecture. The inner tilt loop is driven by a complementary filtered IMU that fuses accelerometer and gyroscope data that keeps the robot upright in real time, while an outer velocity loop regulates forward motion. A parallel turn controller then adjusts the relative wheel speeds, enabling responsive steering and precise in place rotation.
 
+<img src="https://github.com/auersek/Portfolio/blob/main/Images/Speed controller.jpg" width="750" height="550" alt="Communication architecture">
+
 This control structure allows the robot to remain stable even when subjected to external disturbances, sudden turns, or uneven traction. By separating balance, velocity, and heading into dedicated PID loops, the robot can maintain equilibrium while simultaneously executing smooth trajectory changes, giving it the agility required for tight maze navigation and reliable autonomous driving.
 
 Perception is handled by an LD06 LiDAR streamed over UDP to a C++ service that ray-casts hits into a 30×30 occupancy grid (~10 cm cells) at >10 Hz. On top, an A* planner (Manhattan heuristic) converts goals into cell-wise waypoints, while a frontier-exploration routine chooses the next area to explore when the map is incomplete.
 
 A web SPA (HTML/CSS/JS) ties everything together: keyboard/buttons for manual control, click-to-navigate on the live grid, and real-time power telemetry (Chart.js). Commands use non-blocking HTTP on the ESP32, while low-latency telemetry travels via UDP; LiDAR processing auto-starts on boot via systemd. Object detection runs offboard (Raspberry Pi camera → Google Colab YOLOv4), with annotated thumbnails and coordinates overlaid on the grid. Despite a strict £60 budget, the team built custom analog sensing (voltage dividers, differential amps to an MCP3208) for battery percentage and current monitoring. Key challenges—PID retuning after weight shifts, packet latency on the Pi, and long-path obstructions—were solved by re-calibration, offloading parsing to C++, and segmenting A* into per-cell steps, resulting in robust autonomous navigation and clear, responsive operator feedback.
+
+<img src="https://github.com/auersek/Portfolio/blob/main/Images/BalanceRobotServerArchitecture.jpg" width="750" height="550" alt="Communication architecture">
 
 
 
