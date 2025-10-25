@@ -55,7 +55,7 @@ Perception is handled by an LD06 LiDAR streamed over UDP to a C++ service that r
 
 A web SPA (HTML/CSS/JS) ties everything together: keyboard/buttons for manual control, click-to-navigate on the live grid, and real-time power telemetry (Chart.js). Commands use non-blocking HTTP on the ESP32, while low-latency telemetry travels via UDP; LiDAR processing auto-starts on boot via systemd. Object detection runs offboard (Raspberry Pi camera → Google Colab YOLOv4), with annotated thumbnails and coordinates overlaid on the grid. Despite a strict £60 budget, the team built custom analog sensing (voltage dividers, differential amps to an MCP3208) for battery percentage and current monitoring. Key challenges—PID retuning after weight shifts, packet latency on the Pi, and long-path obstructions—were solved by re-calibration, offloading parsing to C++, and segmenting A* into per-cell steps, resulting in robust autonomous navigation and clear, responsive operator feedback.
 
-<img src="https://github.com/auersek/Portfolio/blob/main/Images/BalanceRobotServerArchitecture.png" width="750" height="550" alt="Communication architecture">
+<img src="https://github.com/auersek/Portfolio/blob/main/Images/BalanceRobotServerArchitecture.jpg" width="750" height="550" alt="Communication architecture">
 
 
 
