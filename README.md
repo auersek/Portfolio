@@ -45,6 +45,10 @@ Multiplayer synchronization was managed through the EC2 game server, supporting 
 
 ## PROJECT 4: Balance Robot (C++, Python, Javascript, HTML/CSS):
 
+The Balance Robot is a self-balancing, two-wheeled platform that maps, plans, and drives itself through indoor mazes. Stability comes from a cascaded PID stack—an inner tilt loop fed by a complementary-filtered IMU, an outer velocity loop, and a parallel turn controller—delivering quick disturbance rejection and precise in-place steering. Perception is handled by an LD06 LiDAR streamed over UDP to a C++ service that ray-casts hits (Bresenham) into a 30×30 occupancy grid (~10 cm cells) at >10 Hz. On top, an A* planner (Manhattan heuristic) converts goals into cell-wise waypoints, while a frontier-exploration routine chooses the next area to explore when the map is incomplete.
+
+A web SPA (HTML/CSS/JS) ties everything together: keyboard/buttons for manual control, click-to-navigate on the live grid, and real-time power telemetry (Chart.js). Commands use non-blocking HTTP on the ESP32, while low-latency telemetry travels via UDP; LiDAR processing auto-starts on boot via systemd. Object detection runs offboard (Raspberry Pi camera → Google Colab YOLOv4), with annotated thumbnails and coordinates overlaid on the grid. Despite a strict £60 budget, the team built custom analog sensing (voltage dividers, differential amps to an MCP3208) for battery percentage and current monitoring. Key challenges—PID retuning after weight shifts, packet latency on the Pi, and long-path obstructions—were solved by re-calibration, offloading parsing to C++, and segmenting A* into per-cell steps, resulting in robust autonomous navigation and clear, responsive operator feedback.
+
 
 
 ## PROJECT 5: C Compiler (C++):
